@@ -1,59 +1,66 @@
-# ReceycleHub
+# ♻️ RecycleHub
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 18.
+## 📌 Project Overview
+RecycleHub is an **Angular-based Single Page Application (SPA)** designed to facilitate **waste collection and recycling management**. The platform connects individuals with **authorized collectors** to streamline the waste recycling process.
 
-## Development server
+## 🚀 Features
+### 👤 User Features
+- **Signup/Login**: Register and log in with email/password.
+- **Profile Management**: Update personal information and delete account.
+- **Request Collection**: Submit a request with details on waste type, weight, and pickup time.
+- **View and Manage Requests**: Modify or cancel pending requests.
+- **Points System**: Earn points based on recycled materials and redeem them for vouchers.
 
-To start a local development server, run:
+### 🚛 Collector Features
+- **View Available Requests**: Access pending requests in the same city.
+- **Accept and Manage Requests**: Change request statuses (`En attente`, `Occupée`, `En cours`, `Validée`, `Rejetée`).
+- **Verify and Validate Collection**: Check waste details, confirm weight, and finalize transactions.
 
-```bash
-ng serve
+## 🛠️ Tech Stack
+- **Frontend:** Angular 18+ (with NgRx for state management, RxJS for reactive programming).
+- **UI Framework:** Bootstrap / TailwindCSS.
+- **Data Persistence:** LocalStorage or IndexedDB.
+
+
+## 🔧 Installation & Setup
+### Prerequisites
+- **Node.js 18+**
+- **Angular CLI 18**
+
+### Steps to Run
+```sh
+# Clone the repository
+git clone https://github.com/Soulaiman-Bo/recycleHub
+cd recycleHub
+
+# Install dependencies
+npm install
+
+# Start the development server
+ng serve -o
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+## 🧪 Testing
+```sh
+# Run unit tests
 ng test
-```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
+# Run end-to-end tests
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🚀 Deployment
+To build and deploy the application, use:
+```sh
+ng build --prod
+```
+Host the generated `dist/` folder on **Firebase, Netlify, Vercel, or any static hosting service**.
 
-## Additional Resources
+## 🏆 Contribution
+Contributions are welcome! Please fork the repo, make your changes, and submit a pull request.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📜 License
+This project is licensed under the **MIT License**.
+
+---
+_Developed with ❤️ for a greener planet!_ 🌍
