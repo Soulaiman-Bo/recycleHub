@@ -5,6 +5,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 export const AuthenticaionRoutest: Routes = [
   {
     path: '',
+    component: SignInComponent,
     children: [
       {
         path: 'login',
