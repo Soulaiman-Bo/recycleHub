@@ -28,7 +28,7 @@ export class SignUpComponent {
 
   loading$ = this.store.select(AuthSelectors.selectAuthLoading);
   error$ = this.store.select(AuthSelectors.selectAuthError);
-  success$ = this.store.select(AuthSelectors.selectIsAuthenticated);
+  success$ = this.store.select(AuthSelectors.selectIsSaved);
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.signUpForm = this.fb.group({

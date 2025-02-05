@@ -5,6 +5,7 @@ import * as AuthActions from './auth.actions';
 export const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
+  isSaved: null,
   loading: false,
   error: null,
 };
@@ -20,6 +21,7 @@ export const authReducer = createReducer(
   on(AuthActions.signUpSuccess, (state, { user }) => ({
     ...state,
     user,
+    isSaved: true,
     loading: false,
     error: null,
   })),
@@ -27,6 +29,7 @@ export const authReducer = createReducer(
   on(AuthActions.signUpFailure, (state, { error }) => ({
     ...state,
     loading: false,
+    isSaved: false,
     error,
   })),
 
