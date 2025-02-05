@@ -20,7 +20,6 @@ export const authReducer = createReducer(
   on(AuthActions.signUpSuccess, (state, { user }) => ({
     ...state,
     user,
-    isAuthenticated: true,
     loading: false,
     error: null,
   })),
@@ -30,6 +29,26 @@ export const authReducer = createReducer(
     loading: false,
     error,
   })),
-  
-  on(AuthActions.logout, () => initialState)
+
+  on(AuthActions.logout, () => initialState),
+
+  on(AuthActions.login, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(AuthActions.loginSuccess, (state, { user }) => ({
+    ...state,
+    user,
+    isAuthenticated: true,
+    loading: false,
+    error: null,
+  })),
+
+  on(AuthActions.loginFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
 );

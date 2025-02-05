@@ -20,7 +20,7 @@ export class AuthEffects {
           };
 
           localStorage.setItem('user', JSON.stringify(mockUser));
-
+          
           return of(AuthActions.signUpSuccess({ user: mockUser }));
         } catch (error) {
           return of(AuthActions.signUpFailure({
@@ -33,4 +33,32 @@ export class AuthEffects {
       })))
     )
   );
+
+
+  login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.login),
+      switchMap((action) => {
+
+        const storedUsers = localStorage.getItem('users');
+        const users = storedUsers ? JSON.parse(storedUsers) : [];
+
+        const user = users.find(
+          (u: any) => u.email === action.email && u.password === action.password
+        );
+
+        if (user) {
+          return of(AuthActions.loginSuccess({ user }));
+        } else {
+          return of(AuthActions.loginFailure({ error: 'Invalid email or password' }));
+        }
+
+      }),
+      catchError((error) =>
+        of(AuthActions.loginFailure({ error: 'An error occurred while logging in' }))
+      )
+    )
+  );
 }
+
+
