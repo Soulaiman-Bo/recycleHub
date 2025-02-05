@@ -54,6 +54,7 @@ export class SignUpComponent {
 
   onSubmit(): void {
     if (this.signUpForm.valid) {
+      this.store.dispatch(AuthActions.resetSignUpState());
       this.store.dispatch(AuthActions.signUp(this.signUpForm.value));
     }
   }

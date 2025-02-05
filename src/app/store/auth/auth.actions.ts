@@ -16,6 +16,8 @@ export const signUpFailure = createAction(
   props<{ error: string }>()
 );
 
+export const resetSignUpState = createAction('[Auth] Reset Sign Up State');
+
 export const logout = createAction('[Auth] Logout');
 
 export const login = createAction(
