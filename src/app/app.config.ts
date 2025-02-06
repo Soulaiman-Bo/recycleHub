@@ -12,10 +12,12 @@ import { AuthEffects } from './store/auth/auth.effects';
 import { Actions, provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { reducers } from './store/app.store';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideHttpClient(),
     provideRouter(routes),
     provideStore(reducers),
     provideEffects([AuthEffects]), // Notice the array syntax and removed separate Actions provider
