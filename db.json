@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "c267s3t3i",
+      "username": "tenaropuno",
+      "email": "nawonaqipa@mailinator.com",
+      "role": "individual",
+      "password": "Pa$$w0rd!"
+    },
+    {
+      "id": "30due9if9",
+      "username": "watizevec",
+      "email": "dyqeryso@mailinator.com",
+      "role": "individual",
+      "password": "dyqeryso@mailinator.com"
+    },
+    {
+      "id": "rq9bee2ej",
+      "username": "tadetivyj",
+      "email": "mobo@mailinator.com",
+      "role": "individual",
+      "password": "mobo@mailinator.com"
+    }
+  ]
+}
