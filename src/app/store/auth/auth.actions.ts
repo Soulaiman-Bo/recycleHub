@@ -3,7 +3,7 @@ import { User } from '../../core/models/user.model';
 
 export const signUp = createAction(
   '[Auth] Sign Up',
-  props<{ username: string; email: string; password: string }>()
+  props<{ username: string; email: string; password: string; role?: string }>()
 );
 
 export const signUpSuccess = createAction(
@@ -15,10 +15,6 @@ export const signUpFailure = createAction(
   '[Auth] Sign Up Failure',
   props<{ error: string }>()
 );
-
-export const resetSignUpState = createAction('[Auth] Reset Sign Up State');
-
-export const logout = createAction('[Auth] Logout');
 
 export const login = createAction(
   '[Auth] Login',
@@ -34,3 +30,7 @@ export const loginFailure = createAction(
   '[Auth] Login Failure',
   props<{ error: string }>()
 );
+
+export const resetSignUpState = createAction('[Auth] Reset Sign Up State');
+
+export const logout = createAction('[Auth] Logout');

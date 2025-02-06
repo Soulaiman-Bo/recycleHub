@@ -2,9 +2,11 @@ import { createReducer, on } from '@ngrx/store';
 import { AuthState } from '../../core/models/auth.model';
 import * as AuthActions from './auth.actions';
 
+const savedUser = localStorage.getItem('user');
+
 export const initialState: AuthState = {
-  user: null,
-  isAuthenticated: false,
+  user: savedUser ? JSON.parse(savedUser) : null,
+  isAuthenticated: !!savedUser,
   isSaved: null,
   loading: false,
   error: null,
@@ -31,7 +33,6 @@ export const authReducer = createReducer(
     isSaved: null,
   })),
 
-
   on(AuthActions.signUpFailure, (state, { error }) => ({
     ...state,
     loading: false,
@@ -39,7 +40,16 @@ export const authReducer = createReducer(
     error,
   })),
 
-  on(AuthActions.logout, () => initialState),
+  on(AuthActions.logout, () => {
+    localStorage.removeItem('user');
+    return {
+      user: null,
+      isAuthenticated: false,
+      isSaved: null,
+      loading: false,
+      error: null,
+    };
+  }),
 
   on(AuthActions.login, (state) => ({
     ...state,
@@ -47,13 +57,16 @@ export const authReducer = createReducer(
     error: null,
   })),
 
-  on(AuthActions.loginSuccess, (state, { user }) => ({
-    ...state,
-    user,
-    isAuthenticated: true,
-    loading: false,
-    error: null,
-  })),
+  on(AuthActions.loginSuccess, (state, { user }) => {
+    localStorage.setItem('user', JSON.stringify(user));
+    return {
+      ...state,
+      user,
+      isAuthenticated: true,
+      loading: false,
+      error: null,
+    };
+  }),
 
   on(AuthActions.loginFailure, (state, { error }) => ({
     ...state,
