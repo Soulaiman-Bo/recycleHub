@@ -1,10 +1,5 @@
-import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import * as AuthSelectors from '../../../store/auth/auth.selectors';
@@ -15,14 +10,13 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule,ReactiveFormsModule, RouterModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit, OnDestroy {
   private readonly store = inject(Store);
   private successSubscription!: Subscription;
-
 
   signUpForm: FormGroup;
 
@@ -35,6 +29,7 @@ export class SignUpComponent {
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['individual'], // Default role added
     });
   }
 
@@ -42,20 +37,21 @@ export class SignUpComponent {
     this.successSubscription = this.success$.subscribe((success) => {
       if (success) {
         this.signUpForm.reset();
+        this.router.navigate(['/auth/login'])
       }
     });
+  }
+
+  onSubmit(): void {
+    if (this.signUpForm.valid) {
+      this.store.dispatch(AuthActions.resetSignUpState()); // Reset before new signup attempt
+      this.store.dispatch(AuthActions.signUp(this.signUpForm.value));
+    }
   }
 
   ngOnDestroy(): void {
     if (this.successSubscription) {
       this.successSubscription.unsubscribe();
-    }
-  }
-
-  onSubmit(): void {
-    if (this.signUpForm.valid) {
-      this.store.dispatch(AuthActions.resetSignUpState());
-      this.store.dispatch(AuthActions.signUp(this.signUpForm.value));
     }
   }
 }

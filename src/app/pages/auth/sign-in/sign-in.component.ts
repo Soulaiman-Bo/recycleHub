@@ -1,14 +1,10 @@
-import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { selectAuthError } from '../../../store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
+import { selectAuthError, selectIsAuthenticated } from '../../../store/auth/auth.selectors';
 import * as AuthActions from '../../../store/auth/auth.actions';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,14 +14,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit, OnDestroy {
   private readonly store = inject(Store);
+  private authSubscription!: Subscription;
 
   loginForm: FormGroup;
-
   authError$ = this.store.select(selectAuthError);
-
-  loginSuccess = false; // Track success message
+  isAuthenticated$ = this.store.select(selectIsAuthenticated); // Track auth status
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
@@ -34,17 +29,22 @@ export class SignInComponent {
     });
   }
 
+  ngOnInit() {
+    this.authSubscription = this.isAuthenticated$.subscribe((isAuthenticated) => {
+      if (isAuthenticated) {
+        setTimeout(() => this.router.navigate(['/']), 1500);
+      }
+    });
+  }
+
   onSubmit() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.store.dispatch(AuthActions.login({ email, password }));
-
-      this.authError$.subscribe((error) => {
-        if (!error) {
-          this.loginSuccess = true;
-          setTimeout(() => this.router.navigate(['/']), 1500);
-        }
-      });
     }
+  }
+
+  ngOnDestroy() {
+    this.authSubscription.unsubscribe();
   }
 }
