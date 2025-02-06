@@ -1,9 +1,24 @@
 import { Component, Inject, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormArray,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogModule,
+} from '@angular/material/dialog';
+
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import { Collection, CollectionStatus, WasteType } from '../../../core/models/Collection.model';
+import {
+  Collection,
+  CollectionStatus,
+  WasteType,
+} from '../../../core/models/Collection.model';
 import { selectUser } from '../../../store/auth/auth.selectors';
 
 @Component({
@@ -11,52 +26,66 @@ import { selectUser } from '../../../store/auth/auth.selectors';
   standalone: true,
   templateUrl: './pickup-request-dialog.component.html',
   styleUrls: ['./pickup-request-dialog.component.css'],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
 })
 export class PickupRequestDialogComponent {
   private fb = inject(FormBuilder);
   private store = inject(Store);
   userId = signal<string | null>(null);
 
+  timeSlots: string[] = [
+    '09:00-10:00',
+    '10:00-11:00',
+    '11:00-12:00',
+    '12:00-13:00',
+    '13:00-14:00',
+    '14:00-15:00',
+    '15:00-16:00',
+    '16:00-17:00',
+    '17:00-18:00',
+  ];
+
   wasteTypes = Object.values(WasteType);
-  form: FormGroup;
+  form!: FormGroup;
   uploadedPhotos: string[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<PickupRequestDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.store.select(selectUser).subscribe(user => {
-      if (user?.id) this.userId.set(user.id); // Ensure user.id is not undefined
+    this.store.select(selectUser).subscribe((user) => {
+      if (user?.id) this.userId.set(user.id);
     });
 
+    this.initializeForm();
+  }
+
+  private initializeForm() {
     this.form = this.fb.group({
-      wasteItems: this.fb.array([]), // Multiple waste items
+      wasteItems: this.fb.array([this.createWasteItem()]), // Initialize with one item
       address: ['', Validators.required],
       date: ['', Validators.required],
       timeSlot: ['', Validators.required],
       notes: [''],
-      status: [CollectionStatus.PENDING]
+      status: [CollectionStatus.PENDING],
     });
-
-    this.addWasteItem(); // Initialize with one waste item
   }
 
+  // Getter for wasteItems FormArray
   get wasteItems(): FormArray {
     return this.form.get('wasteItems') as FormArray;
   }
 
+  // Create a new waste item FormGroup
+  private createWasteItem(): FormGroup {
+    return this.fb.group({
+      type: ['', Validators.required],
+      weight: [1000, [Validators.required, Validators.min(1000)]],
+    });
+  }
+
   addWasteItem() {
-    this.wasteItems.push(
-      this.fb.group({
-        type: [this.wasteTypes[0], Validators.required],
-        weight: [1000, [Validators.required, Validators.min(1000)]],
-      })
-    );
+    this.wasteItems.push(this.createWasteItem());
   }
 
   removeWasteItem(index: number) {
