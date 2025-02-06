@@ -20,17 +20,16 @@
       "email": "mobo@mailinator.com",
       "role": "individual",
       "password": "mobo@mailinator.com"
+    },
+    {
+      "id": "6vdmsbhs3",
+      "username": "gdsq",
+      "email": "tiniin.email@gmail.com",
+      "role": "individual",
+      "password": "tiniin.email@gmail.com"
     }
   ],
   "collections": [
-    {
-      "id": "b013",
-      "wasteType": [
-        "Plastic",
-        "Glass"
-      ],
-      "quantity": 52,
-      "description": "Expedita aut enim as"
-    }
+    
   ]
 }
