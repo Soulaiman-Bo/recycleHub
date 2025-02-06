@@ -1,15 +1,12 @@
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
-  <!-- Sidebar -->
-  <app-sidebar></app-sidebar>
+<div class="h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+  <!-- Topbar: No defined height, dynamically adjusts based on content -->
+  <app-topbar></app-topbar>
 
-  <!-- Main Content -->
-  <div class="flex-1">
-    <!-- Top Navigation -->
-    <app-topbar></app-topbar>
-
-    <!-- Dashboard Content -->
-    <main class="p-6">
+  <!-- Main: Takes up the remaining height after Topbar -->
+  <main class="flex flex-1 overflow-hidden">
+    <app-sidebar></app-sidebar>
+    <div class="p-6 flex-1 overflow-auto">
       <router-outlet></router-outlet>
-    </main>
-  </div>
+    </div>
+  </main>
 </div>
