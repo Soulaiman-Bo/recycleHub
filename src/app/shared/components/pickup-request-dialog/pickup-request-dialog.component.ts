@@ -1,4 +1,4 @@
-import { Component, Inject, inject, signal } from '@angular/core';
+import { Component, HostListener, Inject, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,8 +19,8 @@ import {
   WasteType,
 } from '../../../core/models/Collection.model';
 import { selectUser } from '../../../store/auth/auth.selectors';
-import { WasteItemComponent } from '../waste-items/waste-items.component';
 import { WasteTestComponent } from '../waste-test/waste-test.component';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 @Component({
   selector: 'app-pickup-request-dialog',
@@ -31,8 +31,8 @@ import { WasteTestComponent } from '../waste-test/waste-test.component';
     CommonModule,
     MatDialogModule,
     ReactiveFormsModule,
-    WasteItemComponent,
-    WasteTestComponent
+    WasteTestComponent,
+    FileUploadComponent
   ],
 })
 export class PickupRequestDialogComponent {
@@ -81,16 +81,41 @@ export class PickupRequestDialogComponent {
     this.wasteItems = updatedWasteItems;
   }
 
-  handleFileUpload(event: any) {
-    const files = event.target.files;
-    for (let file of files) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.uploadedPhotos.push(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  // handleFileUpload(event: any) {
+  //   const files = event.target.files;
+  //   for (let file of files) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e: any) => {
+  //       this.uploadedPhotos.push(e.target.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // }
+
+  // @HostListener('dragover', ['$event'])
+  // onDragOver(event: DragEvent) {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+  // }
+
+  // @HostListener('drop', ['$event'])
+  // onDrop(event: DragEvent) {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+  //   const files = event.dataTransfer?.files;
+  //   if (files) {
+  //     // Handle your files here
+  //   }
+  // }
+
+  onFileUploaded(base64String: string) {
+    this.uploadedPhotos.push(base64String);
   }
+
+  onFileRemoved(index: number) {
+    this.uploadedPhotos.splice(index, 1);
+  }
+
 
   submitForm() {
     if (!this.userId()) return;

@@ -1,37 +1,80 @@
-<div class="p-6 bg-white rounded-lg shadow-md w-full max-w-lg">
+<div class="p-6 bg-white rounded-lg shadow-md w-full">
   <h2 class="text-lg font-semibold mb-4">Request Pickup</h2>
 
   <form [formGroup]="form" (ngSubmit)="submitForm()" class="space-y-4">
     <!-- Waste Items Component -->
-    <app-waste-test [wasteItems]="wasteItems" (wasteItemsChange)="updateWasteItems($event)"></app-waste-test>
+    <app-waste-test
+      [wasteItems]="wasteItems"
+      (wasteItemsChange)="updateWasteItems($event)">
+    </app-waste-test>
 
-    <!-- Address -->
-    <label class="block text-sm font-medium">Pickup Address</label>
-    <input type="text" formControlName="address" class="w-full p-2 border rounded" required />
+    <!-- Flex Container for Date, Time Slot, and Address -->
+    <div class="flex flex-col md:flex-row gap-4">
+      <!-- Date -->
+      <div class="flex-1">
+        <label class="block text-sm font-medium">Pickup Date</label>
+        <input
+          type="date"
+          formControlName="date"
+          class="w-full p-2 border rounded"
+          required
+        />
+      </div>
 
-    <!-- Date -->
-    <label class="block text-sm font-medium">Pickup Date</label>
-    <input type="date" formControlName="date" class="w-full p-2 border rounded" required />
+      <!-- Time Slot -->
+      <div class="flex-1">
+        <label class="block text-sm font-medium">Time Slot</label>
+        <select
+          formControlName="timeSlot"
+          class="w-full p-2 border rounded"
+        >
+          <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
+        </select>
+      </div>
 
-    <!-- Time Slot -->
-    <label class="block text-sm font-medium">Time Slot</label>
-    <select formControlName="timeSlot" class="w-full p-2 border rounded">
-      <option *ngFor="let slot of timeSlots" [value]="slot">{{ slot }}</option>
-    </select>
+      <!-- Address -->
+      <div class="flex-1">
+        <label class="block text-sm font-medium">Pickup Address</label>
+        <input
+          type="text"
+          formControlName="address"
+          class="w-full p-2 border rounded"
+          required
+        />
+      </div>
+    </div>
 
-     <!-- Notes -->
-     <label class="block text-sm font-medium">Notes (Optional)</label>
-     <textarea formControlName="notes" class="w-full p-2 border rounded"></textarea>
+    <!-- File Upload -->
+    <app-file-upload
+      label="Upload Photos (Optional)"
+      [multiple]="true"
+      accept="image/*"
+      (fileUploaded)="onFileUploaded($event)"
+      (fileRemoved)="onFileRemoved($event)"
+    ></app-file-upload>
 
-     <!-- File Upload -->
-     <label class="block text-sm font-medium">Upload Photos (Optional)</label>
-     <input type="file" (change)="handleFileUpload($event)" multiple accept="image/*" class="w-full p-2 border rounded" />
-
+    <!-- Notes -->
+    <div>
+      <label class="block text-sm font-medium">Notes (Optional)</label>
+      <textarea
+        formControlName="notes"
+        class="w-full p-2 border rounded">
+      </textarea>
+    </div>
 
     <!-- Submit -->
     <div class="flex justify-end space-x-2">
-      <button type="button" (click)="dialogRef.close()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-      <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded">Submit</button>
+      <button
+        type="button"
+        (click)="dialogRef.close()"
+        class="px-4 py-2 bg-gray-300 rounded">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="px-4 py-2 bg-green-600 text-white rounded">
+        Submit
+      </button>
     </div>
   </form>
 </div>

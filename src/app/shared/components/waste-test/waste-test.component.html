@@ -1,18 +1,26 @@
 <div class="space-y-4">
-  <div *ngFor="let item of wasteItemsFormArray.controls; let i = index" [formGroup]="getFormGroup(item)" class="space-y-2 border-b pb-4">
-    <!-- Waste Type -->
-    <label class="block text-sm font-medium">Waste Type</label>
-    <select formControlName="type" class="w-full p-2 border rounded" (change)="emitChanges()">
-      <option *ngFor="let type of wasteTypes" [value]="type">{{ type }}</option>
-    </select>
+  <div *ngFor="let item of wasteItemsFormArray.controls; let i = index" [formGroup]="getFormGroup(item)" class="space-y-4 border-b pb-4">
+    <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
+      <!-- Waste Type -->
+      <div class="flex-1">
+        <label class="block text-sm font-medium">Waste Type</label>
+        <select formControlName="type" class="w-full p-2 border rounded" (change)="emitChanges()">
+          <option *ngFor="let type of wasteTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
 
-    <!-- Weight -->
-    <label class="block text-sm font-medium">Weight (grams)</label>
-    <input type="number" formControlName="weight" class="w-full p-2 border rounded" min="1000" (input)="emitChanges()" />
+      <!-- Weight -->
+      <div class="flex-1">
+        <label class="block text-sm font-medium">Weight (grams)</label>
+        <input type="number" formControlName="weight" class="w-full p-2 border rounded" min="1000" (input)="emitChanges()" />
+      </div>
 
-    <button type="button" (click)="removeWasteItem(i)" *ngIf="wasteItemsFormArray.length > 1" class="text-red-500 text-sm mt-2">
-      Remove
-    </button>
+      <button type="button" (click)="removeWasteItem(i)" *ngIf="wasteItemsFormArray.length > 1" class="text-red-500 text-sm">
+        Remove
+      </button>
+    </div>
+
+
   </div>
 
   <button type="button" (click)="addWasteItem()" class="text-blue-500 text-sm">+ Add Another Waste Item</button>

@@ -15,7 +15,8 @@ export class IndividualComponent {
 
   openPickupDialog() {
     const dialogRef = this.dialog.open(PickupRequestDialogComponent, {
-      width: '500px',
+      width: '50vw',
+      maxWidth: '80vw'
     });
 
     dialogRef.afterClosed().subscribe(result => {
