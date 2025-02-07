@@ -21,6 +21,7 @@ import {
 import { selectUser } from '../../../store/auth/auth.selectors';
 import { WasteTestComponent } from '../waste-test/waste-test.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { createCollection } from '../../../store/collection/collections.actions';
 
 @Component({
   selector: 'app-pickup-request-dialog',
@@ -32,7 +33,7 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
     MatDialogModule,
     ReactiveFormsModule,
     WasteTestComponent,
-    FileUploadComponent
+    FileUploadComponent,
   ],
 })
 export class PickupRequestDialogComponent {
@@ -81,33 +82,6 @@ export class PickupRequestDialogComponent {
     this.wasteItems = updatedWasteItems;
   }
 
-  // handleFileUpload(event: any) {
-  //   const files = event.target.files;
-  //   for (let file of files) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e: any) => {
-  //       this.uploadedPhotos.push(e.target.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
-
-  // @HostListener('dragover', ['$event'])
-  // onDragOver(event: DragEvent) {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  // }
-
-  // @HostListener('drop', ['$event'])
-  // onDrop(event: DragEvent) {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   const files = event.dataTransfer?.files;
-  //   if (files) {
-  //     // Handle your files here
-  //   }
-  // }
-
   onFileUploaded(base64String: string) {
     this.uploadedPhotos.push(base64String);
   }
@@ -115,7 +89,6 @@ export class PickupRequestDialogComponent {
   onFileRemoved(index: number) {
     this.uploadedPhotos.splice(index, 1);
   }
-
 
   submitForm() {
     if (!this.userId()) return;
@@ -131,6 +104,9 @@ export class PickupRequestDialogComponent {
       notes: this.form.value.notes,
       status: CollectionStatus.PENDING,
     };
+
+    this.store.dispatch(createCollection({ collection: formData }));
+
 
     this.dialogRef.close([formData]);
   }
