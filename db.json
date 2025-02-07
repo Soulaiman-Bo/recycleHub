@@ -32,7 +32,7 @@
   "collections": [
     {
       "id": 1738921913707,
-      "userId": "6vdmsbhs3",
+      "userId": "6vdmsgbhs3",
       "wasteItems": [
         {
           "type": "Glass",
@@ -46,6 +46,58 @@
       "date": "2025-02-06",
       "timeSlot": "11:00-12:00",
       "notes": "SDFJHSDFJ",
+      "status": "Pending"
+    },
+    {
+      "id": 1738923986065,
+      "userId": "6vdmsbhs3",
+      "wasteItems": [
+        {
+          "type": "Paper",
+          "weight": 10
+        },
+        {
+          "type": "Paper",
+          "weight": 1000
+        }
+      ],
+      "photos": [],
+      "address": "assira",
+      "date": "2025-02-20",
+      "timeSlot": "12:00-13:00",
+      "notes": "wlsvlwsjdjd",
+      "status": "Pending"
+    },
+    {
+      "id": 1738924576296,
+      "userId": "6vdmsbhs3",
+      "wasteItems": [
+        {
+          "type": "Metal",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "Massira",
+      "date": "2025-02-20",
+      "timeSlot": "12:00-13:00",
+      "notes": "jhhhhhhhhhhhhhhhhhhhhh",
+      "status": "In Progress"
+    },
+    {
+      "id": 1738925085728,
+      "userId": "6vdmsbhs3",
+      "wasteItems": [
+        {
+          "type": "Paper",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "FFFF",
+      "date": "2025-02-20",
+      "timeSlot": "11:00-12:00",
+      "notes": "",
       "status": "Pending"
     }
   ]
