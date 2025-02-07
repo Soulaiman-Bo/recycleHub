@@ -4,27 +4,40 @@ import { CollectionService } from '../../core/services/collection.service';
 import {
   createCollection,
   createCollectionSuccess,
-  createCollectionFailure
+  createCollectionFailure,
+  getCollections,
+  getCollectionsSuccess,
+  getCollectionsFailure,
 } from './collections.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 
 @Injectable()
 export class CollectionsEffects {
-  collectionService = inject(CollectionService)
-  actions$ = inject(Actions)
-
-
-
-  constructor(
-  ) {}
+  private actions$ = inject(Actions);
+  private collectionService = inject(CollectionService);
 
   createCollection$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createCollection),
       mergeMap(({ collection }) =>
         this.collectionService.createCollection(collection).pipe(
-          map((createdCollection) => createCollectionSuccess({ collection: createdCollection })),
+          map((createdCollection) =>
+            createCollectionSuccess({ collection: createdCollection })
+          ),
           catchError((error) => of(createCollectionFailure({ error })))
+        )
+      )
+    )
+  );
+
+  // New effect for fetching the collections
+  getCollections$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getCollections),
+      mergeMap(() =>
+        this.collectionService.getCollections().pipe(
+          map((collections) => getCollectionsSuccess({ collections })),
+          catchError((error) => of(getCollectionsFailure({ error })))
         )
       )
     )
