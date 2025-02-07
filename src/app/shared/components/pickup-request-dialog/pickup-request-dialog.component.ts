@@ -3,7 +3,6 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormArray,
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
@@ -11,22 +10,30 @@ import {
   MatDialogRef,
   MatDialogModule,
 } from '@angular/material/dialog';
-
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import {
   Collection,
   CollectionStatus,
+  WasteItem,
   WasteType,
 } from '../../../core/models/Collection.model';
 import { selectUser } from '../../../store/auth/auth.selectors';
+import { WasteItemComponent } from '../waste-items/waste-items.component';
+import { WasteTestComponent } from '../waste-test/waste-test.component';
 
 @Component({
   selector: 'app-pickup-request-dialog',
   standalone: true,
   templateUrl: './pickup-request-dialog.component.html',
   styleUrls: ['./pickup-request-dialog.component.css'],
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    WasteItemComponent,
+    WasteTestComponent
+  ],
 })
 export class PickupRequestDialogComponent {
   private fb = inject(FormBuilder);
@@ -45,7 +52,7 @@ export class PickupRequestDialogComponent {
     '17:00-18:00',
   ];
 
-  wasteTypes = Object.values(WasteType);
+  wasteItems: WasteItem[] = [{ type: WasteType.PLASTIC, weight: 10 }];
   form!: FormGroup;
   uploadedPhotos: string[] = [];
 
@@ -62,7 +69,6 @@ export class PickupRequestDialogComponent {
 
   private initializeForm() {
     this.form = this.fb.group({
-      wasteItems: this.fb.array([this.createWasteItem()]), // Initialize with one item
       address: ['', Validators.required],
       date: ['', Validators.required],
       timeSlot: ['', Validators.required],
@@ -71,27 +77,8 @@ export class PickupRequestDialogComponent {
     });
   }
 
-  // Getter for wasteItems FormArray
-  get wasteItems(): FormArray {
-    return this.form.get('wasteItems') as FormArray;
-  }
-
-  // Create a new waste item FormGroup
-  private createWasteItem(): FormGroup {
-    return this.fb.group({
-      type: ['', Validators.required],
-      weight: [1000, [Validators.required, Validators.min(1000)]],
-    });
-  }
-
-  addWasteItem() {
-    this.wasteItems.push(this.createWasteItem());
-  }
-
-  removeWasteItem(index: number) {
-    if (this.wasteItems.length > 1) {
-      this.wasteItems.removeAt(index);
-    }
+  updateWasteItems(updatedWasteItems: WasteItem[]) {
+    this.wasteItems = updatedWasteItems;
   }
 
   handleFileUpload(event: any) {
@@ -108,19 +95,18 @@ export class PickupRequestDialogComponent {
   submitForm() {
     if (!this.userId()) return;
 
-    const formData: Collection[] = this.wasteItems.value.map((item: any) => ({
+    const formData: Collection = {
       id: Date.now(),
       userId: this.userId()!,
+      wasteItems: this.wasteItems, // Updated waste items
       photos: this.uploadedPhotos,
       address: this.form.value.address,
       date: this.form.value.date,
       timeSlot: this.form.value.timeSlot,
       notes: this.form.value.notes,
       status: CollectionStatus.PENDING,
-      weight: item.weight,
-      type: item.type,
-    }));
+    };
 
-    this.dialogRef.close(formData);
+    this.dialogRef.close([formData]);
   }
 }

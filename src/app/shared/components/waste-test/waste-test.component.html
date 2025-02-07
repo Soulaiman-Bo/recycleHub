@@ -1,0 +1,19 @@
+<div class="space-y-4">
+  <div *ngFor="let item of wasteItemsFormArray.controls; let i = index" [formGroup]="getFormGroup(item)" class="space-y-2 border-b pb-4">
+    <!-- Waste Type -->
+    <label class="block text-sm font-medium">Waste Type</label>
+    <select formControlName="type" class="w-full p-2 border rounded" (change)="emitChanges()">
+      <option *ngFor="let type of wasteTypes" [value]="type">{{ type }}</option>
+    </select>
+
+    <!-- Weight -->
+    <label class="block text-sm font-medium">Weight (grams)</label>
+    <input type="number" formControlName="weight" class="w-full p-2 border rounded" min="1000" (input)="emitChanges()" />
+
+    <button type="button" (click)="removeWasteItem(i)" *ngIf="wasteItemsFormArray.length > 1" class="text-red-500 text-sm mt-2">
+      Remove
+    </button>
+  </div>
+
+  <button type="button" (click)="addWasteItem()" class="text-blue-500 text-sm">+ Add Another Waste Item</button>
+</div>
