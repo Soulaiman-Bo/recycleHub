@@ -14,6 +14,7 @@ import { reducers } from './store/app.store';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
+import { CollectionsEffects } from './store/collection/collections.effects';
 
 
 export const appConfig: ApplicationConfig = {
@@ -22,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideRouter(routes),
     provideStore(reducers),
-    provideEffects([AuthEffects]), // Notice the array syntax and removed separate Actions provider
+    provideEffects([AuthEffects, CollectionsEffects]), // Notice the array syntax and removed separate Actions provider
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
