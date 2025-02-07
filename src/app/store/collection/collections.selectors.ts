@@ -1,17 +1,20 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CollectionsState } from './collections.reducer';
+import { selectUser } from '../auth/auth.selectors';
 
-// Feature key for the collections slice
-export const selectCollectionsState = createFeatureSelector<CollectionsState>('collections');
+export const selectCollectionsState =
+  createFeatureSelector<CollectionsState>('collections');
 
-// Example selector to get the array of collections
 export const selectAllCollections = createSelector(
   selectCollectionsState,
   (state) => state.collections
 );
 
-// Example selector to get loading status
-export const selectCollectionsLoading = createSelector(
-  selectCollectionsState,
-  (state) => state.loading
+export const selectCollectionsForCurrentUser = createSelector(
+  selectAllCollections,
+  selectUser,
+  (collections, user) => {
+    if (!user?.id) return [];
+    return collections.filter((c) => c.userId === user.id);
+  }
 );
