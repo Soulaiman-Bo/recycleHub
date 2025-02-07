@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PickupRequestDialogComponent } from '../../../shared/components/pickup-request-dialog/pickup-request-dialog.component';
 import { CommonModule } from '@angular/common';
+import { CollectionTableComponent } from '../../../shared/components/collection-table/collection-table.component';
 
 @Component({
   selector: 'app-individual',
   standalone: true,
-  imports: [MatDialogModule, CommonModule],
+  imports: [MatDialogModule, CommonModule, CollectionTableComponent],
   templateUrl: './individual.component.html',
   styleUrl: './individual.component.css'
 })

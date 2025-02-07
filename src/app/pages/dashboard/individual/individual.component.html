@@ -143,112 +143,16 @@
 
   <!-- Request Collection Button -->
   <div class="flex justify-center">
-    <button (click)="openPickupDialog()"
-      class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-sm transition-colors duration-200">
+    <button
+      (click)="openPickupDialog()"
+      class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-sm transition-colors duration-200"
+    >
       Request New Collection
     </button>
   </div>
 
-
   <!-- Recent Collections -->
-  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
-    <div class="p-6">
-      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-        Recent Collections
-      </h2>
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead>
-            <tr>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                Date
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                Type
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                Weight
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                Status
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                Points
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-            <tr>
-              <td
-                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
-              >
-                Mar 15, 2024
-              </td>
-              <td
-                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
-              >
-                Paper & Cardboard
-              </td>
-              <td
-                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
-              >
-                15 kg
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
-                >
-                  Completed
-                </span>
-              </td>
-              <td
-                class="px-6 py-4 whitespace-nowrap text-sm text-primary-600 dark:text-primary-400"
-              >
-                +150
-              </td>
-            </tr>
-            <tr>
-              <td
-                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
-              >
-                Mar 12, 2024
-              </td>
-              <td
-                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
-              >
-                Plastic & Glass
-              </td>
-              <td
-                class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
-              >
-                8 kg
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
-                >
-                  Completed
-                </span>
-              </td>
-              <td
-                class="px-6 py-4 whitespace-nowrap text-sm text-primary-600 dark:text-primary-400"
-              >
-                +80
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  <div class="">
+    <app-collection-table></app-collection-table>
   </div>
 </div>
