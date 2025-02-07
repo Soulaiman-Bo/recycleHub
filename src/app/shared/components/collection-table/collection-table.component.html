@@ -37,17 +37,23 @@
         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
           <tr *ngFor="let collection of collections$ | async">
             <!-- Format the date -->
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-              {{ collection.date | date:'MMM d, y' }}
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
+            >
+              {{ collection.date | date : "MMM d, y" }}
             </td>
 
             <!-- Use the helper to get waste type names -->
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
+            >
               {{ getWasteTypesString(collection) }}
             </td>
 
             <!-- Use the helper for total weight -->
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
+            >
               {{ getTotalWeight(collection) }} kg
             </td>
 
@@ -80,8 +86,19 @@
             </td>
 
             <!-- Example Points column: weight * 10 -->
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-primary-600 dark:text-primary-400">
-              +{{ getTotalWeight(collection) * 10 }}
+            <td
+              class="px-6 py-4 whitespace-nowrap text-sm"
+              [ngClass]="{
+                'text-gray-500 dark:text-gray-400':
+                  collection.status === 'Pending',
+                'text-red-500 dark:text-red-400':
+                  collection.status === 'Rejected',
+                'text-green-500 dark:text-green-400':
+                  collection.status === 'In Progress' ||
+                  collection.status === 'Completed'
+              }"
+            >
+              + {{ getCollectionPoints(collection) }}
             </td>
           </tr>
         </tbody>

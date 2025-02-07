@@ -3,8 +3,9 @@ import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Collection } from '../../../core/models/Collection.model';
-import { selectAllCollections, selectCollectionsForCurrentUser } from '../../../store/collection/collections.selectors';
+import { selectCollectionsForCurrentUser } from '../../../store/collection/collections.selectors';
 import { getCollections } from '../../../store/collection/collections.actions';
+import { calculatePoints } from '../../utils/points.util';
 
 @Component({
   selector: 'app-collection-table',
@@ -21,6 +22,10 @@ export class CollectionTableComponent {
 
   ngOnInit(): void {
     this.store.dispatch(getCollections());
+  }
+
+  getCollectionPoints(collection: Collection): number {
+    return calculatePoints(collection);
   }
 
   getWasteTypesString(collection: Collection): string {
