@@ -1,12 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { heroPhoto, heroXMark, heroCloudArrowUp, heroDocument } from '@ng-icons/heroicons/outline';
+
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgIcon],
+    viewProviders: [
+      provideIcons({
+        heroPhoto, heroXMark, heroCloudArrowUp, heroDocument
+      }),
+    ],
   templateUrl: './file-upload.component.html',
-  styleUrl: './file-upload.component.css'
+  styleUrl: './file-upload.component.css',
+  styles: [`
+    :host {
+      display: block;
+    }
+  `]
 })
 export class FileUploadComponent {
   @Input() label = 'Upload Files';
@@ -47,6 +60,8 @@ export class FileUploadComponent {
     if (files) {
       this.processFiles(Array.from(files));
     }
+    // Reset the input value to allow uploading the same file again
+    event.target.value = '';
   }
 
   private processFiles(files: File[]) {
@@ -60,7 +75,11 @@ export class FileUploadComponent {
     }
   }
 
-  removeFile(index: number) {
+  removeFile(index: number, event: Event) {
+    // Prevent event from bubbling up to parent elements
+    event.preventDefault();
+    event.stopPropagation();
+
     this.fileNames.splice(index, 1);
     this.fileRemoved.emit(index);
   }
