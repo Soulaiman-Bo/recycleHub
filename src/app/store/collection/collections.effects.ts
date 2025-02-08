@@ -8,7 +8,9 @@ import {
   getCollections,
   getCollectionsSuccess,
   getCollectionsFailure,
-
+  updateCollection,
+  updateCollectionSuccess,
+  updateCollectionFailure,
   deleteCollection,
   deleteCollectionSuccess,
   deleteCollectionFailure,
@@ -42,6 +44,18 @@ export class CollectionsEffects {
         this.collectionService.getCollections().pipe(
           map((collections) => getCollectionsSuccess({ collections })),
           catchError((error) => of(getCollectionsFailure({ error })))
+        )
+      )
+    )
+  );
+
+  updateCollection$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCollection),
+      mergeMap(({ collection }) =>
+        this.collectionService.updateCollection(collection).pipe(
+          map((updated) => updateCollectionSuccess({ collection: updated })),
+          catchError((error) => of(updateCollectionFailure({ error })))
         )
       )
     )
