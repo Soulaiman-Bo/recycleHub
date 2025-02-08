@@ -1,0 +1,60 @@
+<div class="p-4">
+  <h2 class="text-lg font-bold mb-2">Collection Details</h2>
+
+  <div class="space-y-2 text-sm">
+    <div>
+      <strong>Date:</strong> {{ data.collection.date | date: 'MMM d, y' }}
+    </div>
+    <div><strong>Address:</strong> {{ data.collection.address }}</div>
+    <div><strong>Time Slot:</strong> {{ data.collection.timeSlot }}</div>
+    <div><strong>Status:</strong> {{ data.collection.status }}</div>
+
+    <!-- Show collector name if not pending -->
+    <div *ngIf="data.collection.status !== 'Pending'">
+      <strong>Collector Name:</strong>
+      {{ getCollectorName() }}
+    </div>
+
+    <div><strong>Notes:</strong> {{ data.collection.notes || 'None' }}</div>
+  </div>
+
+  <hr class="my-4" />
+
+  <h3 class="text-sm font-semibold mb-2">Photos</h3>
+  <!-- If there are photos, display them. Otherwise show broken placeholder -->
+  <ng-container    *ngIf="!!data?.collection && !!data.collection.photos && data.collection.photos.length > 0; else noPhotos"
+    >
+    <div class="flex flex-wrap gap-2">
+      <div
+        *ngFor="let photo of data.collection.photos"
+        class="w-32 h-32 border rounded overflow-hidden"
+      >
+        <img
+          [src]="photo"
+          alt="Collection Photo"
+          class="object-cover w-full h-full"
+          (error)="onImageError($event)"
+        />
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noPhotos>
+    <div class="w-32 h-32 border rounded overflow-hidden">
+      <!-- Single broken icon or fallback image -->
+      <img
+        [src]="BROKEN_IMAGE_URL"
+        alt="No photo"
+        class="object-cover w-full h-full"
+      />
+    </div>
+  </ng-template>
+
+  <div class="mt-4 flex justify-end">
+    <button
+      class="px-4 py-2 bg-gray-300 text-sm rounded"
+      (click)="dialogRef.close()"
+    >
+      Close
+    </button>
+  </div>
+</div>
