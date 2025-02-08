@@ -11,7 +11,20 @@ export const getCollections = createAction('[Collections] Get Collections');
 export const getCollectionsSuccess = createAction('[Collections] Get Collections Success', props<{ collections: Collection[] }>());
 export const getCollectionsFailure = createAction('[Collections] Get Collections Failure', props<{ error: any }>());
 
+export const updateCollection = createAction(
+  '[Collections] Update Collection',
+  props<{ collection: Collection }>()
+);
 
+export const updateCollectionSuccess = createAction(
+  '[Collections] Update Collection Success',
+  props<{ collection: Collection }>()
+);
+
+export const updateCollectionFailure = createAction(
+  '[Collections] Update Collection Failure',
+  props<{ error: any }>()
+);
 
 // DELETE
 export const deleteCollection = createAction(
