@@ -1,84 +1,104 @@
-import { Component, EventEmitter, inject, Input, Output, OnInit, SimpleChanges, OnChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  OnInit,
+  SimpleChanges,
+  OnChanges,
+} from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { WasteItem, WasteType } from '../../../core/models/Collection.model';
 import { CommonModule } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+
+import {
+  heroTrash,
+  heroPlus,
+  heroScale,
+  heroXCircle,
+  heroExclamationCircle,
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-waste-test',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgIcon],
   templateUrl: './waste-test.component.html',
-  styleUrl: './waste-test.component.css'
+  viewProviders: [
+    provideIcons({
+      heroTrash,
+      heroPlus,
+      heroScale,
+      heroXCircle,
+      heroExclamationCircle,
+    }),
+  ],
+  styleUrl: './waste-test.component.css',
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+    `,
+  ],
 })
-export class WasteTestComponent implements OnInit, OnChanges {
+export class WasteTestComponent implements OnInit {
   private fb = inject(FormBuilder);
 
-  @Input() wasteItems: WasteItem[] = []; // Receive waste items array from parent
-  @Output() wasteItemsChange = new EventEmitter<WasteItem[]>(); // Emit updated waste items to parent
+  @Input() wasteItems: WasteItem[] = [];
+  @Output() wasteItemsChange = new EventEmitter<WasteItem[]>();
 
   wasteTypes = Object.values(WasteType);
-  private wasteItemsArray!: FormArray; // Use a private variable for FormArray
+  form: FormGroup;
 
   constructor() {
-    // Initialize an empty FormArray in the constructor
-    this.wasteItemsArray = this.fb.array([]);
+    this.form = this.fb.group({
+      items: this.fb.array([])
+    });
+
+    // Listen to form changes
+    this.form.get('items')?.valueChanges.subscribe(values => {
+      this.wasteItemsChange.emit(values);
+    });
   }
 
   ngOnInit() {
-    // Ensure that wasteItems are available before initializing the FormArray
-    this.updateWasteItems();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['wasteItems']) {
-      this.updateWasteItems();
+    if (this.wasteItems.length === 0) {
+      this.addWasteItem();
+    } else {
+      this.wasteItems.forEach(item => this.addWasteItem(item));
     }
-  }
-
-  private updateWasteItems() {
-    // Reinitialize the FormArray with the latest waste items
-    this.wasteItemsArray.clear();
-    this.wasteItems.forEach((item) => {
-      this.wasteItemsArray.push(this.createWasteItemForm(item));
-    });
-
-    // Emit changes so parent receives initial data
-    this.emitChanges();
   }
 
   private createWasteItemForm(item?: WasteItem): FormGroup {
     return this.fb.group({
       type: [item?.type || WasteType.PLASTIC, Validators.required],
-      weight: [item?.weight || 1000, [Validators.required, Validators.min(1000)]],
+      weight: [item?.weight || 1, [Validators.required, Validators.min(1)]]
     });
   }
 
-  addWasteItem() {
-    if (!this.wasteItemsArray) {
-      console.error('wasteItemsFormArray is undefined!');
-      return;
-    }
-    this.wasteItemsArray.push(this.createWasteItemForm());
-    this.emitChanges();
+  addWasteItem(item?: WasteItem) {
+    const itemsArray = this.form.get('items') as FormArray;
+    itemsArray.push(this.createWasteItemForm(item));
   }
 
   removeWasteItem(index: number) {
-    if (this.wasteItemsArray.length > 1) {
-      this.wasteItemsArray.removeAt(index);
-      this.emitChanges();
+    const itemsArray = this.form.get('items') as FormArray;
+    if (itemsArray.length > 1) {
+      itemsArray.removeAt(index);
     }
   }
 
-  emitChanges() {
-    this.wasteItemsChange.emit(this.wasteItemsArray.value);
-  }
-
-  get wasteItemsFormArray(): FormArray {
-    return this.wasteItemsArray;
-  }
-
-  // Helper function to safely cast AbstractControl to FormGroup
-  getFormGroup(control: AbstractControl): FormGroup {
-    return control as FormGroup;
+  get itemsFormArray() {
+    return this.form.get('items') as FormArray;
   }
 }

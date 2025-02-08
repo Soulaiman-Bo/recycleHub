@@ -11,6 +11,7 @@ import {
 import { calculatePoints } from '../../utils/points.util';
 import { MatDialog } from '@angular/material/dialog';
 import { PickupRequestDialogComponent } from '../pickup-request-dialog/pickup-request-dialog.component';
+import { CollectionDetailsDialogComponent } from '../collection-details-dialog/collection-details-dialog.component';
 
 @Component({
   selector: 'app-collection-table',
@@ -52,6 +53,13 @@ export class CollectionTableComponent {
       data: { collection },
       width: '50vw',
       maxWidth: '80vw',
+    });
+  }
+
+  openDetails(collection: Collection) {
+    this.dialog.open(CollectionDetailsDialogComponent, {
+      data: { collection },
+      width: '600px',
     });
   }
 }
