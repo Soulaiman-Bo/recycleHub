@@ -4,8 +4,13 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Collection } from '../../../core/models/Collection.model';
 import { selectCollectionsForCurrentUser } from '../../../store/collection/collections.selectors';
-import { deleteCollection, getCollections } from '../../../store/collection/collections.actions';
+import {
+  deleteCollection,
+  getCollections,
+} from '../../../store/collection/collections.actions';
 import { calculatePoints } from '../../utils/points.util';
+import { MatDialog } from '@angular/material/dialog';
+import { PickupRequestDialogComponent } from '../pickup-request-dialog/pickup-request-dialog.component';
 
 @Component({
   selector: 'app-collection-table',
@@ -16,9 +21,11 @@ import { calculatePoints } from '../../utils/points.util';
 })
 export class CollectionTableComponent {
   private store = inject(Store);
+  private dialog = inject(MatDialog);
 
-  collections$: Observable<Collection[]> =
-    this.store.select(selectCollectionsForCurrentUser);
+  collections$: Observable<Collection[]> = this.store.select(
+    selectCollectionsForCurrentUser
+  );
 
   ngOnInit(): void {
     this.store.dispatch(getCollections());
@@ -41,7 +48,10 @@ export class CollectionTableComponent {
   }
 
   onEditCollection(collection: Collection) {
-    // We'll show how to open the dialog with "Edit" mode
-    // or create a dedicated edit dialog, etc.
+    this.dialog.open(PickupRequestDialogComponent, {
+      data: { collection },
+      width: '50vw',
+      maxWidth: '80vw',
+    });
   }
 }

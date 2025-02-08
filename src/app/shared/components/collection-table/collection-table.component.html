@@ -107,26 +107,48 @@
             </td>
 
             <!-- ACTIONS COLUMN -->
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 flex gap-4 whitespace-nowrap">
               <!-- Only show Edit/Delete if status is Pending or Rejected -->
               <button
-                *ngIf="
-                  collection.status === 'Pending' ||
-                  collection.status === 'Rejected'
+                [disabled]="
+                  !(
+                    collection.status === 'Pending' ||
+                    collection.status === 'Rejected'
+                  )
                 "
                 (click)="onEditCollection(collection)"
-                class="px-2 py-1 mr-2 bg-blue-500 text-white rounded"
+                class="font-medium hover:underline"
+                [ngClass]="{
+                  'text-blue-600 dark:text-blue-500':
+                    collection.status === 'Pending' ||
+                    collection.status === 'Rejected',
+
+                  'text-gray-400 cursor-not-allowed':
+                    collection.status !== 'Pending' &&
+                    collection.status !== 'Rejected'
+                }"
               >
                 Edit
               </button>
-
+              <!-- DELETE BUTTON -->
               <button
-                *ngIf="
-                  collection.status === 'Pending' ||
-                  collection.status === 'Rejected'
+                [disabled]="
+                  !(
+                    collection.status === 'Pending' ||
+                    collection.status === 'Rejected'
+                  )
                 "
-                (click)="onDeleteCollection(collection.id)"
-                class="px-2 py-1 bg-red-500 text-white rounded"
+                (click)="onDeleteCollection(collection.id!)"
+                class="font-medium hover:underline"
+                [ngClass]="{
+                  'text-red-600 dark:text-red-500':
+                    collection.status === 'Pending' ||
+                    collection.status === 'Rejected',
+
+                  'text-gray-400 cursor-not-allowed':
+                    collection.status !== 'Pending' &&
+                    collection.status !== 'Rejected'
+                }"
               >
                 Delete
               </button>
