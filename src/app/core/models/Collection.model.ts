@@ -23,6 +23,7 @@ export interface Collection {
   wasteItems: WasteItem[];
   photos: string[];
   address: string;
+  city: string
   date: string;
   timeSlot: string;
   notes?: string;

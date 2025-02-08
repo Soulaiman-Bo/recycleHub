@@ -77,6 +77,7 @@ export class PickupRequestDialogComponent {
   private loadCollectionData(existing: Collection) {
     this.form.patchValue({
       address: existing.address,
+      city: existing.city,
       date: existing.date,
       timeSlot: existing.timeSlot,
       notes: existing.notes,
@@ -89,6 +90,7 @@ export class PickupRequestDialogComponent {
   private initializeForm() {
     this.form = this.fb.group({
       address: ['', Validators.required],
+      city: ['', Validators.required],
       date: ['', Validators.required],
       timeSlot: ['', Validators.required],
       notes: [''],
@@ -118,6 +120,7 @@ export class PickupRequestDialogComponent {
       wasteItems: this.wasteItems,
       photos: this.uploadedPhotos,
       address: this.form.value.address,
+      city: this.form.value.city,
       date: this.form.value.date,
       timeSlot: this.form.value.timeSlot,
       notes: this.form.value.notes,
