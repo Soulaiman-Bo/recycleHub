@@ -21,4 +21,12 @@ export class CollectionService {
     return this.http.get<Collection[]>(this.apiUrl);
   }
 
+  updateCollection(collection: Collection): Observable<Collection> {
+    return this.http.put<Collection>(`${this.apiUrl}/${collection.id}`, collection);
+  }
+
+  deleteCollection(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }
