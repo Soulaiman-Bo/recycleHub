@@ -51,80 +51,54 @@ import {
     `,
   ],
 })
-export class WasteTestComponent implements OnInit, OnChanges {
+export class WasteTestComponent implements OnInit {
   private fb = inject(FormBuilder);
 
   @Input() wasteItems: WasteItem[] = [];
   @Output() wasteItemsChange = new EventEmitter<WasteItem[]>();
 
   wasteTypes = Object.values(WasteType);
-  wasteItemsArray: FormArray;
+  form: FormGroup;
 
   constructor() {
-    this.wasteItemsArray = this.fb.array([]);
-  }
+    this.form = this.fb.group({
+      items: this.fb.array([])
+    });
 
-  ngOnInit() {
-    this.updateWasteItems();
-    // Subscribe to value changes to ensure form updates are emitted
-    this.wasteItemsArray.valueChanges.subscribe(() => {
-      this.emitChanges();
+    // Listen to form changes
+    this.form.get('items')?.valueChanges.subscribe(values => {
+      this.wasteItemsChange.emit(values);
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['wasteItems']) {
-      this.updateWasteItems();
-    }
-  }
-
-  private updateWasteItems() {
-    this.wasteItemsArray.clear();
+  ngOnInit() {
     if (this.wasteItems.length === 0) {
       this.addWasteItem();
     } else {
-      this.wasteItems.forEach((item) => {
-        this.wasteItemsArray.push(this.createWasteItemForm(item));
-      });
+      this.wasteItems.forEach(item => this.addWasteItem(item));
     }
   }
 
   private createWasteItemForm(item?: WasteItem): FormGroup {
     return this.fb.group({
       type: [item?.type || WasteType.PLASTIC, Validators.required],
-      weight: [
-        item?.weight || 1,
-        [Validators.required, Validators.min(1)]
-      ],
+      weight: [item?.weight || 1, [Validators.required, Validators.min(1)]]
     });
   }
 
-  addWasteItem() {
-    if (!this.wasteItemsArray) {
-      console.error('wasteItemsFormArray is undefined!');
-      return;
-    }
-    this.wasteItemsArray.push(this.createWasteItemForm());
-    this.emitChanges();
+  addWasteItem(item?: WasteItem) {
+    const itemsArray = this.form.get('items') as FormArray;
+    itemsArray.push(this.createWasteItemForm(item));
   }
 
   removeWasteItem(index: number) {
-    if (this.wasteItemsArray.length > 1) {
-      this.wasteItemsArray.removeAt(index);
-      this.emitChanges();
+    const itemsArray = this.form.get('items') as FormArray;
+    if (itemsArray.length > 1) {
+      itemsArray.removeAt(index);
     }
   }
 
-  emitChanges() {
-    const formValue = this.wasteItemsArray.value;
-    this.wasteItemsChange.emit(formValue);
-  }
-
-  get wasteItemsFormArray(): FormArray {
-    return this.wasteItemsArray;
-  }
-
-  getFormGroup(control: AbstractControl): FormGroup {
-    return control as FormGroup;
+  get itemsFormArray() {
+    return this.form.get('items') as FormArray;
   }
 }
