@@ -40,7 +40,11 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-          <tr *ngFor="let collection of collections$ | async">
+          <tr
+            *ngFor="let collection of collections$ | async"
+            class="cursor-pointer hover:bg-gray-50"
+            (click)="openDetails(collection)"
+          >
             <!-- Format the date -->
             <td
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
@@ -116,7 +120,7 @@
                     collection.status === 'Rejected'
                   )
                 "
-                (click)="onEditCollection(collection)"
+                (click)="onEditCollection(collection); $event.stopPropagation()"
                 class="font-medium hover:underline"
                 [ngClass]="{
                   'text-blue-600 dark:text-blue-500':
@@ -138,7 +142,7 @@
                     collection.status === 'Rejected'
                   )
                 "
-                (click)="onDeleteCollection(collection.id!)"
+                (click)="onDeleteCollection(collection.id!); $event.stopPropagation()"
                 class="font-medium hover:underline"
                 [ngClass]="{
                   'text-red-600 dark:text-red-500':
