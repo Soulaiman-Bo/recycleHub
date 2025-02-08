@@ -32,6 +32,11 @@
             >
               Points
             </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+            >
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -85,7 +90,7 @@
               </span>
             </td>
 
-            <!-- Example Points column: weight * 10 -->
+            <!--  Points  -->
             <td
               class="px-6 py-4 whitespace-nowrap text-sm"
               [ngClass]="{
@@ -99,6 +104,32 @@
               }"
             >
               + {{ getCollectionPoints(collection) }}
+            </td>
+
+            <!-- ACTIONS COLUMN -->
+            <td class="px-6 py-4 whitespace-nowrap">
+              <!-- Only show Edit/Delete if status is Pending or Rejected -->
+              <button
+                *ngIf="
+                  collection.status === 'Pending' ||
+                  collection.status === 'Rejected'
+                "
+                (click)="onEditCollection(collection)"
+                class="px-2 py-1 mr-2 bg-blue-500 text-white rounded"
+              >
+                Edit
+              </button>
+
+              <button
+                *ngIf="
+                  collection.status === 'Pending' ||
+                  collection.status === 'Rejected'
+                "
+                (click)="onDeleteCollection(collection.id)"
+                class="px-2 py-1 bg-red-500 text-white rounded"
+              >
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>

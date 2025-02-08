@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Collection } from '../../../core/models/Collection.model';
 import { selectCollectionsForCurrentUser } from '../../../store/collection/collections.selectors';
-import { getCollections } from '../../../store/collection/collections.actions';
+import { deleteCollection, getCollections } from '../../../store/collection/collections.actions';
 import { calculatePoints } from '../../utils/points.util';
 
 @Component({
@@ -34,5 +34,14 @@ export class CollectionTableComponent {
 
   getTotalWeight(collection: Collection): number {
     return collection.wasteItems.reduce((sum, item) => sum + item.weight, 0);
+  }
+
+  onDeleteCollection(id: number) {
+    this.store.dispatch(deleteCollection({ id }));
+  }
+
+  onEditCollection(collection: Collection) {
+    // We'll show how to open the dialog with "Edit" mode
+    // or create a dedicated edit dialog, etc.
   }
 }

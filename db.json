@@ -49,22 +49,6 @@
       "status": "Completed"
     },
     {
-      "id": "1738939730058",
-      "userId": "6vdmsbhs3",
-      "wasteItems": [
-        {
-          "type": "Paper",
-          "weight": 10
-        }
-      ],
-      "photos": [],
-      "address": "qffqs",
-      "date": "2025-02-21",
-      "timeSlot": "13:00-14:00",
-      "notes": "",
-      "status": "Rejected"
-    },
-    {
       "id": 1738939880800,
       "userId": "6vdmsbhs3",
       "wasteItems": [
