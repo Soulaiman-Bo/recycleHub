@@ -10,3 +10,22 @@ export const createCollectionFailure = createAction('[Collections] Create Collec
 export const getCollections = createAction('[Collections] Get Collections');
 export const getCollectionsSuccess = createAction('[Collections] Get Collections Success', props<{ collections: Collection[] }>());
 export const getCollectionsFailure = createAction('[Collections] Get Collections Failure', props<{ error: any }>());
+
+
+
+// DELETE
+export const deleteCollection = createAction(
+  '[Collections] Delete Collection',
+  props<{ id: number }>()
+);
+
+export const deleteCollectionSuccess = createAction(
+  '[Collections] Delete Collection Success',
+  props<{ id: number }>()
+);
+
+export const deleteCollectionFailure = createAction(
+  '[Collections] Delete Collection Failure',
+  props<{ error: any }>()
+);
+
