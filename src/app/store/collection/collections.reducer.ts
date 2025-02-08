@@ -7,7 +7,9 @@ import {
   getCollections,
   getCollectionsSuccess,
   getCollectionsFailure,
-
+  updateCollection,
+  updateCollectionSuccess,
+  updateCollectionFailure,
   deleteCollection,
   deleteCollectionSuccess,
   deleteCollectionFailure,
@@ -63,6 +65,23 @@ export const collectionsReducer = createReducer(
     error,
   })),
 
+  on(updateCollection, (state) => ({ ...state, loading: true })),
+  on(updateCollectionSuccess, (state, { collection }) => {
+    const updatedCollections = state.collections.map((c) =>
+      c.id === collection.id ? collection : c
+    );
+    return {
+      ...state,
+      collections: updatedCollections,
+      loading: false,
+      error: null,
+    };
+  }),
+  on(updateCollectionFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
 
 
   on(deleteCollection, (state) => ({ ...state, loading: true })),
