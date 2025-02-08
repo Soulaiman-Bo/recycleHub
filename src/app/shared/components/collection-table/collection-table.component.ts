@@ -4,8 +4,13 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Collection } from '../../../core/models/Collection.model';
 import { selectCollectionsForCurrentUser } from '../../../store/collection/collections.selectors';
-import { getCollections } from '../../../store/collection/collections.actions';
+import {
+  deleteCollection,
+  getCollections,
+} from '../../../store/collection/collections.actions';
 import { calculatePoints } from '../../utils/points.util';
+import { MatDialog } from '@angular/material/dialog';
+import { PickupRequestDialogComponent } from '../pickup-request-dialog/pickup-request-dialog.component';
 
 @Component({
   selector: 'app-collection-table',
@@ -16,9 +21,11 @@ import { calculatePoints } from '../../utils/points.util';
 })
 export class CollectionTableComponent {
   private store = inject(Store);
+  private dialog = inject(MatDialog);
 
-  collections$: Observable<Collection[]> =
-    this.store.select(selectCollectionsForCurrentUser);
+  collections$: Observable<Collection[]> = this.store.select(
+    selectCollectionsForCurrentUser
+  );
 
   ngOnInit(): void {
     this.store.dispatch(getCollections());
@@ -34,5 +41,17 @@ export class CollectionTableComponent {
 
   getTotalWeight(collection: Collection): number {
     return collection.wasteItems.reduce((sum, item) => sum + item.weight, 0);
+  }
+
+  onDeleteCollection(id: number) {
+    this.store.dispatch(deleteCollection({ id }));
+  }
+
+  onEditCollection(collection: Collection) {
+    this.dialog.open(PickupRequestDialogComponent, {
+      data: { collection },
+      width: '50vw',
+      maxWidth: '80vw',
+    });
   }
 }

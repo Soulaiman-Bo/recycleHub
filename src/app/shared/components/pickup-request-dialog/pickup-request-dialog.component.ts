@@ -21,7 +21,7 @@ import {
 import { selectUser } from '../../../store/auth/auth.selectors';
 import { WasteTestComponent } from '../waste-test/waste-test.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
-import { createCollection } from '../../../store/collection/collections.actions';
+import { createCollection, updateCollection } from '../../../store/collection/collections.actions';
 
 @Component({
   selector: 'app-pickup-request-dialog',
@@ -59,13 +59,31 @@ export class PickupRequestDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<PickupRequestDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: { collection?: Collection }
   ) {
+    // Subscribe to the current user ID
     this.store.select(selectUser).subscribe((user) => {
       if (user?.id) this.userId.set(user.id);
     });
 
     this.initializeForm();
+
+    // If we have a collection passed in data, we're in 'edit' mode
+    if (this.data?.collection) {
+      this.loadCollectionData(this.data.collection);
+    }
+  }
+
+  private loadCollectionData(existing: Collection) {
+    this.form.patchValue({
+      address: existing.address,
+      date: existing.date,
+      timeSlot: existing.timeSlot,
+      notes: existing.notes,
+      status: existing.status,
+    });
+    this.wasteItems = [...existing.wasteItems];
+    this.uploadedPhotos = [...existing.photos];
   }
 
   private initializeForm() {
@@ -93,21 +111,31 @@ export class PickupRequestDialogComponent {
   submitForm() {
     if (!this.userId()) return;
 
+    // Build the form data
     const formData: Collection = {
-      id: Date.now(),
-      userId: this.userId()!,
-      wasteItems: this.wasteItems, // Updated waste items
+      ...this.data?.collection, // this preserves the existing id if editing
+      userId: this.userId()!,   // override userId if necessary
+      wasteItems: this.wasteItems,
       photos: this.uploadedPhotos,
       address: this.form.value.address,
       date: this.form.value.date,
       timeSlot: this.form.value.timeSlot,
       notes: this.form.value.notes,
-      status: CollectionStatus.PENDING,
+      status: this.form.value.status,
     };
 
-    this.store.dispatch(createCollection({ collection: formData }));
+    if (!this.data?.collection?.id) {
+      delete formData.id;
+    }
 
+    // if we have a collection in data, dispatch update
+    if (this.data?.collection) {
+      this.store.dispatch(updateCollection({ collection: formData }));
+    } else {
+      // else create new
+      this.store.dispatch(createCollection({ collection: formData }));
+    }
 
-    this.dialogRef.close([formData]);
+    this.dialogRef.close();
   }
 }

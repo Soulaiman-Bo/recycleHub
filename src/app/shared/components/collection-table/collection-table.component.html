@@ -32,6 +32,11 @@
             >
               Points
             </th>
+            <th
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+            >
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -85,7 +90,7 @@
               </span>
             </td>
 
-            <!-- Example Points column: weight * 10 -->
+            <!--  Points  -->
             <td
               class="px-6 py-4 whitespace-nowrap text-sm"
               [ngClass]="{
@@ -99,6 +104,54 @@
               }"
             >
               + {{ getCollectionPoints(collection) }}
+            </td>
+
+            <!-- ACTIONS COLUMN -->
+            <td class="px-6 py-4 flex gap-4 whitespace-nowrap">
+              <!-- Only show Edit/Delete if status is Pending or Rejected -->
+              <button
+                [disabled]="
+                  !(
+                    collection.status === 'Pending' ||
+                    collection.status === 'Rejected'
+                  )
+                "
+                (click)="onEditCollection(collection)"
+                class="font-medium hover:underline"
+                [ngClass]="{
+                  'text-blue-600 dark:text-blue-500':
+                    collection.status === 'Pending' ||
+                    collection.status === 'Rejected',
+
+                  'text-gray-400 cursor-not-allowed':
+                    collection.status !== 'Pending' &&
+                    collection.status !== 'Rejected'
+                }"
+              >
+                Edit
+              </button>
+              <!-- DELETE BUTTON -->
+              <button
+                [disabled]="
+                  !(
+                    collection.status === 'Pending' ||
+                    collection.status === 'Rejected'
+                  )
+                "
+                (click)="onDeleteCollection(collection.id!)"
+                class="font-medium hover:underline"
+                [ngClass]="{
+                  'text-red-600 dark:text-red-500':
+                    collection.status === 'Pending' ||
+                    collection.status === 'Rejected',
+
+                  'text-gray-400 cursor-not-allowed':
+                    collection.status !== 'Pending' &&
+                    collection.status !== 'Rejected'
+                }"
+              >
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>

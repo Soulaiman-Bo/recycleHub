@@ -18,7 +18,7 @@ export interface WasteItem {
 }
 
 export interface Collection {
-  id: number;
+  id?: number;
   userId: string;
   wasteItems: WasteItem[];
   photos: string[];

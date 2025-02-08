@@ -8,6 +8,12 @@ import {
   getCollections,
   getCollectionsSuccess,
   getCollectionsFailure,
+  updateCollection,
+  updateCollectionSuccess,
+  updateCollectionFailure,
+  deleteCollection,
+  deleteCollectionSuccess,
+  deleteCollectionFailure,
 } from './collections.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 
@@ -42,4 +48,30 @@ export class CollectionsEffects {
       )
     )
   );
+
+  updateCollection$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCollection),
+      mergeMap(({ collection }) =>
+        this.collectionService.updateCollection(collection).pipe(
+          map((updated) => updateCollectionSuccess({ collection: updated })),
+          catchError((error) => of(updateCollectionFailure({ error })))
+        )
+      )
+    )
+  );
+
+
+  deleteCollection$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteCollection),
+      mergeMap(({ id }) =>
+        this.collectionService.deleteCollection(id).pipe(
+          map(() => deleteCollectionSuccess({ id })),
+          catchError((error) => of(deleteCollectionFailure({ error })))
+        )
+      )
+    )
+  );
+
 }
