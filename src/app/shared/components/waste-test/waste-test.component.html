@@ -1,27 +1,90 @@
-<div class="space-y-4">
-  <div *ngFor="let item of wasteItemsFormArray.controls; let i = index" [formGroup]="getFormGroup(item)" class="space-y-4 border-b pb-4">
-    <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
+<div class="space-y-6">
+  <div *ngFor="let item of wasteItemsFormArray.controls; let i = index"
+       [formGroup]="getFormGroup(item)"
+       class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 hover:border-teal-100 transition-all">
+
+    <div class="flex flex-col md:flex-row md:items-start md:space-x-4 space-y-4 md:space-y-0">
       <!-- Waste Type -->
       <div class="flex-1">
-        <label class="block text-sm font-medium">Waste Type</label>
-        <select formControlName="type" class="w-full p-2 border rounded" (change)="emitChanges()">
-          <option *ngFor="let type of wasteTypes" [value]="type">{{ type }}</option>
-        </select>
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          <ng-icon name="heroTrash" class="inline-block w-4 h-4 mr-1.5 text-teal-600"></ng-icon>
+          Waste Type
+        </label>
+        <div class="relative">
+          <select
+            formControlName="type"
+            class="w-full p-3 pr-8 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all appearance-none bg-white">
+            <option *ngFor="let type of wasteTypes" [value]="type">{{ type }}</option>
+          </select>
+          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <div class="border-l pl-2 h-full flex items-center">
+              <div class="w-4 h-4 border-t-2 border-r-2 border-gray-400 transform rotate-45 translate-y-0"></div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="getFormGroup(item).get('type')?.errors?.['required'] && getFormGroup(item).get('type')?.touched"
+             class="text-red-500 text-sm mt-1 flex items-center">
+          <ng-icon name="heroExclamationCircle" class="w-4 h-4 mr-1"></ng-icon>
+          Type is required
+        </div>
       </div>
 
       <!-- Weight -->
       <div class="flex-1">
-        <label class="block text-sm font-medium">Weight (grams)</label>
-        <input type="number" formControlName="weight" class="w-full p-2 border rounded" min="1000" (input)="emitChanges()" />
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          <ng-icon name="heroScale" class="inline-block w-4 h-4 mr-1.5 text-teal-600"></ng-icon>
+          Weight (kg)
+        </label>
+        <div class="relative">
+          <input
+            type="number"
+            formControlName="weight"
+            class="w-full p-3 pr-12 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all"
+            min="1"
+            step="1"
+          />
+          <div class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 pointer-events-none">
+            kg
+          </div>
+        </div>
+        <div *ngIf="getFormGroup(item).get('weight')?.errors?.['required'] && getFormGroup(item).get('weight')?.touched"
+             class="text-red-500 text-sm mt-1 flex items-center">
+          <ng-icon name="heroExclamationCircle" class="w-4 h-4 mr-1"></ng-icon>
+          Weight is required
+        </div>
+        <div *ngIf="getFormGroup(item).get('weight')?.errors?.['min'] && getFormGroup(item).get('weight')?.touched"
+             class="text-red-500 text-sm mt-1 flex items-center">
+          <ng-icon name="heroExclamationCircle" class="w-4 h-4 mr-1"></ng-icon>
+          Minimum weight is 1kg
+        </div>
       </div>
 
-      <button type="button" (click)="removeWasteItem(i)" *ngIf="wasteItemsFormArray.length > 1" class="text-red-500 text-sm">
-        Remove
-      </button>
+      <!-- Remove Button -->
+      <div class="flex items-start md:pt-8">
+        <button
+          type="button"
+          (click)="removeWasteItem(i)"
+          *ngIf="wasteItemsFormArray.length > 1"
+          class="group flex items-center px-3 py-2 text-sm text-red-600 hover:text-red-700 transition-colors">
+          <ng-icon
+            name="heroXCircle"
+            class="w-5 h-5 mr-1.5 transition-transform group-hover:scale-110">
+          </ng-icon>
+          Remove
+        </button>
+      </div>
     </div>
-
-
   </div>
 
-  <button type="button" (click)="addWasteItem()" class="text-blue-500 text-sm">+ Add Another Waste Item</button>
+  <!-- Add Button -->
+  <button
+    type="button"
+    (click)="addWasteItem()"
+    class="flex items-center px-4 py-2 text-sm text-teal-600 hover:text-teal-700 transition-colors">
+    <ng-icon
+      name="heroPlus"
+      class="w-5 h-5 mr-1.5 transition-transform hover:scale-110">
+    </ng-icon>
+    Add Another Waste Item
+  </button>
 </div>

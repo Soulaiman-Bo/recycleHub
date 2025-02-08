@@ -1,32 +1,75 @@
-import { Component, EventEmitter, inject, Input, Output, OnInit, SimpleChanges, OnChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  OnInit,
+  SimpleChanges,
+  OnChanges,
+} from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { WasteItem, WasteType } from '../../../core/models/Collection.model';
 import { CommonModule } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+
+import {
+  heroTrash,
+  heroPlus,
+  heroScale,
+  heroXCircle,
+  heroExclamationCircle,
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-waste-test',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgIcon],
   templateUrl: './waste-test.component.html',
-  styleUrl: './waste-test.component.css'
+  viewProviders: [
+    provideIcons({
+      heroTrash,
+      heroPlus,
+      heroScale,
+      heroXCircle,
+      heroExclamationCircle,
+    }),
+  ],
+  styleUrl: './waste-test.component.css',
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+    `,
+  ],
 })
 export class WasteTestComponent implements OnInit, OnChanges {
   private fb = inject(FormBuilder);
 
-  @Input() wasteItems: WasteItem[] = []; // Receive waste items array from parent
-  @Output() wasteItemsChange = new EventEmitter<WasteItem[]>(); // Emit updated waste items to parent
+  @Input() wasteItems: WasteItem[] = [];
+  @Output() wasteItemsChange = new EventEmitter<WasteItem[]>();
 
   wasteTypes = Object.values(WasteType);
-  private wasteItemsArray!: FormArray; // Use a private variable for FormArray
+  wasteItemsArray: FormArray;
 
   constructor() {
-    // Initialize an empty FormArray in the constructor
     this.wasteItemsArray = this.fb.array([]);
   }
 
   ngOnInit() {
-    // Ensure that wasteItems are available before initializing the FormArray
     this.updateWasteItems();
+    // Subscribe to value changes to ensure form updates are emitted
+    this.wasteItemsArray.valueChanges.subscribe(() => {
+      this.emitChanges();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -36,20 +79,23 @@ export class WasteTestComponent implements OnInit, OnChanges {
   }
 
   private updateWasteItems() {
-    // Reinitialize the FormArray with the latest waste items
     this.wasteItemsArray.clear();
-    this.wasteItems.forEach((item) => {
-      this.wasteItemsArray.push(this.createWasteItemForm(item));
-    });
-
-    // Emit changes so parent receives initial data
-    this.emitChanges();
+    if (this.wasteItems.length === 0) {
+      this.addWasteItem();
+    } else {
+      this.wasteItems.forEach((item) => {
+        this.wasteItemsArray.push(this.createWasteItemForm(item));
+      });
+    }
   }
 
   private createWasteItemForm(item?: WasteItem): FormGroup {
     return this.fb.group({
       type: [item?.type || WasteType.PLASTIC, Validators.required],
-      weight: [item?.weight || 1000, [Validators.required, Validators.min(1000)]],
+      weight: [
+        item?.weight || 1,
+        [Validators.required, Validators.min(1)]
+      ],
     });
   }
 
@@ -70,14 +116,14 @@ export class WasteTestComponent implements OnInit, OnChanges {
   }
 
   emitChanges() {
-    this.wasteItemsChange.emit(this.wasteItemsArray.value);
+    const formValue = this.wasteItemsArray.value;
+    this.wasteItemsChange.emit(formValue);
   }
 
   get wasteItemsFormArray(): FormArray {
     return this.wasteItemsArray;
   }
 
-  // Helper function to safely cast AbstractControl to FormGroup
   getFormGroup(control: AbstractControl): FormGroup {
     return control as FormGroup;
   }
