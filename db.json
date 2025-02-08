@@ -69,6 +69,10 @@
         {
           "type": "Paper",
           "weight": 1000
+        },
+        {
+          "type": "Metal",
+          "weight": 1002
         }
       ],
       "photos": [

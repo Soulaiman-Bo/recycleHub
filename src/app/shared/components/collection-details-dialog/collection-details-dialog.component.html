@@ -1,60 +1,117 @@
-<div class="p-4">
-  <h2 class="text-lg font-bold mb-2">Collection Details</h2>
-
-  <div class="space-y-2 text-sm">
-    <div>
-      <strong>Date:</strong> {{ data.collection.date | date: 'MMM d, y' }}
+<div
+  class=""
+>
+  <div
+    class="bg-white rounded-2xl shadow-lg  w-full max-h-[90vh] overflow-hidden"
+  >
+    <!-- Header -->
+    <div class="relative p-6 bg-gradient-to-r from-teal-500 to-teal-600">
+      <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-semibold text-white">Collection Details</h2>
+        <button
+          (click)="dialogRef.close()"
+          class="text-white hover:bg-white/20 rounded-full p-1 transition-colors"
+        >
+          <ng-icon name="heroXMark" class="w-6 h-6" />
+        </button>
+      </div>
+      <span [class]="getStatusClass()">
+        {{ data.collection.status }}
+      </span>
     </div>
-    <div><strong>Address:</strong> {{ data.collection.address }}</div>
-    <div><strong>Time Slot:</strong> {{ data.collection.timeSlot }}</div>
-    <div><strong>Status:</strong> {{ data.collection.status }}</div>
 
-    <!-- Show collector name if not pending -->
-    <div *ngIf="data.collection.status !== 'Pending'">
-      <strong>Collector Name:</strong>
-      {{ getCollectorName() }}
-    </div>
+    <!-- Content -->
+    <div class="p-6 space-y-6 overflow-y-auto max-h-[calc(90vh-200px)]">
+      <!-- Date and Time -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex items-center space-x-3">
+          <div class="p-2 bg-teal-50 rounded-lg">
+            <ng-icon name="heroCalendar" class="w-5 h-5 text-teal-600" />
+          </div>
+          <div>
+            <span class="text-sm text-gray-500">Date</span>
+            <p class="text-gray-900 font-medium">{{ data.collection.date }}</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="p-2 bg-teal-50 rounded-lg">
+            <ng-icon name="heroClock" class="w-5 h-5 text-teal-600" />
+          </div>
+          <div>
+            <span class="text-sm text-gray-500">Time Slot</span>
+            <p class="text-gray-900 font-medium">
+              {{ data.collection.timeSlot }}
+            </p>
+          </div>
+        </div>
+      </div>
 
-    <div><strong>Notes:</strong> {{ data.collection.notes || 'None' }}</div>
-  </div>
+      <!-- Address -->
+      <div class="flex items-start space-x-3">
+        <div class="p-2 bg-teal-50 rounded-lg">
+          <ng-icon name="heroMapPin" class="w-5 h-5 text-teal-600" />
+        </div>
+        <div>
+          <span class="text-sm text-gray-500">Address</span>
+          <p class="text-gray-900 font-medium">{{ data.collection.address }}</p>
+        </div>
+      </div>
 
-  <hr class="my-4" />
+      <!-- Waste Items -->
+      <div class="space-y-3">
+        <div class="flex items-center space-x-2">
+          <ng-icon name="heroTrash" class="w-5 h-5 text-teal-600" />
+          <span class="text-gray-900 font-medium">Waste Items</span>
+        </div>
+        <div class="grid gap-2">
+          @for (item of data.collection.wasteItems; track item.type) {
+          <div
+            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+          >
+            <span class="text-gray-700">{{ item.type }}</span>
+            <span class="font-medium text-teal-600">{{ item.weight }} kg</span>
+          </div>
+          }
+        </div>
+      </div>
 
-  <h3 class="text-sm font-semibold mb-2">Photos</h3>
-  <!-- If there are photos, display them. Otherwise show broken placeholder -->
-  <ng-container    *ngIf="!!data?.collection && !!data.collection.photos && data.collection.photos.length > 0; else noPhotos"
-    >
-    <div class="flex flex-wrap gap-2">
-      <div
-        *ngFor="let photo of data.collection.photos"
-        class="w-32 h-32 border rounded overflow-hidden"
-      >
-        <img
-          [src]="photo"
-          alt="Collection Photo"
-          class="object-cover w-full h-full"
-          (error)="onImageError($event)"
-        />
+      <!-- Notes -->
+      <div class="space-y-2">
+        <div class="flex items-center space-x-2">
+          <ng-icon name="heroDocument" class="w-5 h-5 text-teal-600" />
+          <span class="text-gray-900 font-medium">Notes</span>
+        </div>
+        <p class="text-gray-600">
+          {{ data.collection.notes || "No notes provided" }}
+        </p>
+      </div>
+
+      <!-- Photos -->
+      <div class="space-y-3">
+        <div class="flex items-center space-x-2">
+          <ng-icon name="heroPhoto" class="w-5 h-5 text-teal-600" />
+          <span class="text-gray-900 font-medium">Photos</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          @for (photo of data.collection.photos; track photo) {
+          <img
+            [src]="photo"
+            alt="Collection photo"
+            class="rounded-lg object-cover w-full h-32 hover:opacity-90 transition-opacity cursor-pointer"
+          />
+          }
+        </div>
       </div>
     </div>
-  </ng-container>
-  <ng-template #noPhotos>
-    <div class="w-32 h-32 border rounded overflow-hidden">
-      <!-- Single broken icon or fallback image -->
-      <img
-        [src]="BROKEN_IMAGE_URL"
-        alt="No photo"
-        class="object-cover w-full h-full"
-      />
-    </div>
-  </ng-template>
 
-  <div class="mt-4 flex justify-end">
-    <button
-      class="px-4 py-2 bg-gray-300 text-sm rounded"
-      (click)="dialogRef.close()"
-    >
-      Close
-    </button>
+    <!-- Footer -->
+    <div class="p-4 border-t border-gray-100">
+      <button
+        (click)="dialogRef.close()"
+        class="w-full px-4 py-2.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
+      >
+        Close
+      </button>
+    </div>
   </div>
 </div>
