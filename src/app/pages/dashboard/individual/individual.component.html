@@ -2,8 +2,8 @@
 <div class="space-y-6">
   <!-- Welcome Section -->
   <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-      Welcome back, John!
+    <h1 class="text-2xl font-bold text-emerald-800 dark:text-white">
+      Welcome back, {{ (user$ | async)?.username }}!
     </h1>
     <p class="mt-1 text-gray-500 dark:text-gray-400">
       Track your recycling impact and manage your collections.
@@ -16,10 +16,10 @@
   </div>
 
   <!-- Request Collection Button -->
-  <div class="flex justify-center">
+  <div class="flex ">
     <button
       (click)="openPickupDialog()"
-      class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-sm transition-colors duration-200"
+      class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-sm transition-colors duration-200"
     >
       Request New Collection
     </button>

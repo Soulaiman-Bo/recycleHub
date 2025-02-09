@@ -1,186 +1,123 @@
-<div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm">
-  <div class="p-6">
-    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-      Recent Collections
-    </h2>
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-        <thead>
-          <tr>
-            <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
-              Date
-            </th>
-            <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
-              Type
-            </th>
-            <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
-              Weight
-            </th>
-            <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
-              Status
-            </th>
-            <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
-              Points
-            </th>
-            <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody  *ngIf="collections$ | async as collections" class="divide-y divide-gray-200 dark:divide-gray-700">
-          <!-- Display an empty message if there are no collections -->
-          <tr *ngIf="collections.length === 0">
-            <td
-              colspan="6"
-              class="px-6 py-4 text-center text-sm text-gray-900 dark:text-white"
-            >
-              <div class="text-gray-500 text-center py-4 bg-gray-50 rounded-lg">
-                No collections available.
-              </div>
-            </td>
-          </tr>
+<div class="bg-white dark:bg-emerald-800/40 rounded-xl p-6 shadow-sm backdrop-blur-sm">
+  <!-- Header -->
+  <div class="flex items-center   space-x-3 mb-6">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+    </svg>
+    <h3 class="text-emerald-800 dark:text-emerald-200 text-xl font-medium">Recycling Collections</h3>
 
-          <tr
-          *ngFor="let collection of collections"
-            class="cursor-pointer hover:bg-gray-50"
-            (click)="openDetails(collection)"
-          >
-            <!-- Format the date -->
-            <td
-              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
-            >
-              {{ collection.date | date : "MMM d, y" }}
-            </td>
+  </div>
 
-            <!-- Use the helper to get waste type names -->
-            <td
-              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
-            >
-              {{ getWasteTypesString(collection) }}
-            </td>
+  <!-- Table Container -->
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="border-b border-emerald-100 dark:border-emerald-700">
+          <th class="py-3 px-4 text-left text-xs font-medium text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">Date</th>
+          <th class="py-3 px-4 text-left text-xs font-medium text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">Type</th>
+          <th class="py-3 px-4 text-left text-xs font-medium text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">Weight</th>
+          <th class="py-3 px-4 text-left text-xs font-medium text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">Status</th>
+          <th class="py-3 px-4 text-left text-xs font-medium text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">Points</th>
+          <th class="py-3 px-4 text-left text-xs font-medium text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
 
-            <!-- Use the helper for total weight -->
-            <td
-              class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
-            >
-              {{ getTotalWeight(collection) }} kg
-            </td>
+      <tbody *ngIf="collections$ | async as collections"
+             class="divide-y divide-emerald-50 dark:divide-emerald-700/50">
+        <!-- Empty State -->
+        <tr *ngIf="collections.length === 0">
+          <td colspan="6" class="px-4 py-8">
+            <div class="text-center py-8 bg-emerald-50 dark:bg-emerald-800/20 rounded-xl">
+              <p class="text-emerald-600 dark:text-emerald-300">No collections available. Start recycling today!</p>
+            </div>
+          </td>
+        </tr>
 
-            <!-- Status Badge -->
-            <td class="px-6 py-4 whitespace-nowrap">
-              <span
-                *ngIf="collection.status === 'Accepted'"
-                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
-              >
-                Accepted
-              </span>
-              <span
-                *ngIf="collection.status === 'In Progress'"
-                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200"
-              >
-                In Progress
-              </span>
-              <span
-                *ngIf="collection.status === 'Pending'"
-                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200"
-              >
-                Pending
-              </span>
-              <span
-                *ngIf="collection.status === 'Completed'"
-                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200"
-              >
-                Completed
-              </span>
-              <span
-                *ngIf="collection.status === 'Rejected'"
-                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
-              >
-                Rejected
-              </span>
-            </td>
+        <!-- Collection Rows -->
+        <tr *ngFor="let collection of collections"
+            class="hover:bg-emerald-50 dark:hover:bg-emerald-800/60 transition-colors cursor-pointer"
+            (click)="openDetails(collection)">
 
-            <!--  Points  -->
-            <td
-              class="px-6 py-4 whitespace-nowrap text-sm"
+          <td class="px-4 py-4 text-sm text-gray-800 dark:text-emerald-200">
+            {{ collection.date | date:'MMM d, y' }}
+          </td>
+
+          <td class="px-4 py-4 text-sm text-gray-800 dark:text-emerald-200">
+            {{ getWasteTypesString(collection) }}
+          </td>
+
+          <td class="px-4 py-4 text-sm text-gray-800 dark:text-emerald-200">
+            {{ getTotalWeight(collection) }} kg
+          </td>
+
+          <!-- Status Badges -->
+          <td class="px-4 py-4">
+            <span *ngIf="collection.status === 'Accepted'"
+                  class="px-3 py-1 text-xs font-medium rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200">
+              Accepted
+            </span>
+            <span *ngIf="collection.status === 'In Progress'"
+                  class="px-3 py-1 text-xs font-medium rounded-full bg-violet-100 dark:bg-violet-900 text-violet-800 dark:text-violet-200">
+              In Progress
+            </span>
+            <span *ngIf="collection.status === 'Pending'"
+                  class="px-3 py-1 text-xs font-medium rounded-full bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200">
+              Pending
+            </span>
+            <span *ngIf="collection.status === 'Completed'"
+                  class="px-3 py-1 text-xs font-medium rounded-full bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200">
+              Completed
+            </span>
+            <span *ngIf="collection.status === 'Rejected'"
+                  class="px-3 py-1 text-xs font-medium rounded-full bg-rose-100 dark:bg-rose-900 text-rose-800 dark:text-rose-200">
+              Rejected
+            </span>
+          </td>
+
+          <!-- Points -->
+          <td class="px-4 py-4 text-sm font-medium"
               [ngClass]="{
-                'text-gray-500 dark:text-gray-400':
+                'text-emerald-500 dark:text-emerald-400': collection.status === 'Completed',
+                'text-rose-500 dark:text-rose-400': collection.status === 'Rejected',
+                'text-emerald-400 dark:text-emerald-500':
                   collection.status === 'Pending' ||
                   collection.status === 'Accepted' ||
-                  collection.status === 'In Progress',
-                'text-red-500 dark:text-red-400':
-                  collection.status === 'Rejected',
-                'text-green-500 dark:text-green-400':
-                  collection.status === 'Completed'
-              }"
-            >
-              + {{ getCollectionPoints(collection) }}
-            </td>
+                  collection.status === 'In Progress'
+              }">
+            + {{ getCollectionPoints(collection) }}
+          </td>
 
-            <!-- ACTIONS COLUMN -->
-            <td class="px-6 py-4 flex gap-4 whitespace-nowrap">
-              <!-- Only show Edit/Delete if status is Pending or Rejected -->
+          <!-- Actions -->
+          <td class="px-4 py-4">
+            <div class="flex gap-4">
               <button
-                [disabled]="
-                  !(
-                    collection.status === 'Pending' ||
-                    collection.status === 'Rejected'
-                  )
-                "
+                [disabled]="!(collection.status === 'Pending' || collection.status === 'Rejected')"
                 (click)="onEditCollection(collection); $event.stopPropagation()"
-                class="font-medium hover:underline"
+                class="text-sm font-medium transition-colors"
                 [ngClass]="{
-                  'text-blue-600 dark:text-blue-500':
-                    collection.status === 'Pending' ||
-                    collection.status === 'Rejected',
-
-                  'text-gray-400 cursor-not-allowed':
-                    collection.status !== 'Pending' &&
-                    collection.status !== 'Rejected'
-                }"
-              >
+                  'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300':
+                    collection.status === 'Pending' || collection.status === 'Rejected',
+                  'text-gray-300 dark:text-gray-700 cursor-not-allowed':
+                    collection.status !== 'Pending' && collection.status !== 'Rejected'
+                }">
                 Edit
               </button>
-              <!-- DELETE BUTTON -->
               <button
-                [disabled]="
-                  !(
-                    collection.status === 'Pending' ||
-                    collection.status === 'Rejected'
-                  )
-                "
-                (click)="
-                  onDeleteCollection(collection.id!); $event.stopPropagation()
-                "
-                class="font-medium hover:underline"
+                [disabled]="!(collection.status === 'Pending' || collection.status === 'Rejected')"
+                (click)="onDeleteCollection(collection.id!); $event.stopPropagation()"
+                class="text-sm font-medium transition-colors"
                 [ngClass]="{
-                  'text-red-600 dark:text-red-500':
-                    collection.status === 'Pending' ||
-                    collection.status === 'Rejected',
-
-                  'text-gray-400 cursor-not-allowed':
-                    collection.status !== 'Pending' &&
-                    collection.status !== 'Rejected'
-                }"
-              >
+                  'text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300':
+                    collection.status === 'Pending' || collection.status === 'Rejected',
+                  'text-gray-300 dark:text-gray-700 cursor-not-allowed':
+                    collection.status !== 'Pending' && collection.status !== 'Rejected'
+                }">
                 Delete
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -17,7 +17,6 @@ import { calculatePoints, convertPointsToMoney } from '../../utils/points.util';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './stats-overview.component.html',
-  styleUrls: ['./stats-overview.component.css'],
 })
 export class StatsOverviewComponent implements OnInit, OnDestroy {
   private store = inject(Store);
@@ -77,6 +76,6 @@ export class StatsOverviewComponent implements OnInit, OnDestroy {
 
     this.activeRequests = this.pendingCount + this.inProgressCount;
     this.totalVoucherDh = convertPointsToMoney(this.totalPoints);
-    
+
   }
 }

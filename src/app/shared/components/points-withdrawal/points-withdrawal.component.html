@@ -1,118 +1,111 @@
-<div class="bg-green-50 dark:bg-green-900 p-6 rounded-lg shadow space-y-6">
-  <!-- Header Section -->
-  <h2 class="text-xl font-semibold text-green-800 dark:text-green-200">
-    Withdraw Your Points
-  </h2>
+<div class="bg-slate-100 dark:bg-gray-800  p-8 rounded-2xl shadow-lg space-y-8">
+  <!-- Header with Eco Icon -->
+  <div class="flex items-center   space-x-3">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+    <h2 class="text-xl font-medium text-emerald-800 dark:text-emerald-200">
+      Recycle & Earn Rewards
+    </h2>
+  </div>
 
-  <!-- Points Display Section -->
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-    <!-- Total Points -->
-    <div class="p-4 bg-white dark:bg-green-800 rounded-md shadow text-center w-full sm:w-1/2 mr-0 sm:mr-4">
-      <p class="text-sm text-gray-600 dark:text-gray-200">Total Points</p>
-      <p class="text-2xl font-bold text-green-700 dark:text-green-100">
+  <!-- Points Cards Container -->
+  <div class="grid grid-cols-1  md:grid-cols-2 gap-6">
+    <!-- Total Points Card -->
+    <div class="bg-white dark:bg-emerald-800/40 rounded-xl p-6 shadow-sm backdrop-blur-sm transition-all hover:shadow-md">
+      <div class="flex items-center justify-between">
+        <span class="text-emerald-600 dark:text-emerald-300 text-sm font-medium">Total Green Points</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </div>
+      <p class="text-3xl font-bold text-emerald-700 dark:text-emerald-200 mt-2">
         {{ totalPoints$ | async }}
       </p>
     </div>
 
-    <!-- Available Points -->
-    <div class="p-4 bg-white dark:bg-green-800 rounded-md shadow text-center w-full sm:w-1/2">
-      <p class="text-sm text-gray-600 dark:text-gray-200">Available Points</p>
-      <p class="text-2xl font-bold text-green-700 dark:text-green-100">
+    <!-- Available Points Card -->
+    <div class="bg-white dark:bg-emerald-800/40 rounded-xl p-6 shadow-sm backdrop-blur-sm transition-all hover:shadow-md">
+      <div class="flex items-center justify-between">
+        <span class="text-emerald-600 dark:text-emerald-300 text-sm font-medium">Available to Withdraw</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      </div>
+      <p class="text-3xl font-bold text-emerald-700 dark:text-emerald-200 mt-2">
         {{ availablePoints$ | async }}
       </p>
     </div>
   </div>
 
-  <!-- Withdrawal Buttons -->
-  <div class="bg-white dark:bg-green-800 p-4 rounded-md shadow">
-    <h3 class="text-sm font-medium text-gray-800 dark:text-gray-100 mb-3">
-      Select an Amount to Withdraw (in Points):
-    </h3>
+  <!-- Withdrawal Options Section -->
+  <div class="bg-white dark:bg-emerald-800/40 rounded-xl p-6 shadow-sm backdrop-blur-sm">
+    <h3 class="text-emerald-800 dark:text-emerald-200 font-medium mb-4">Quick Withdrawal Options</h3>
     <div class="flex flex-wrap gap-3">
       <button
         *ngFor="let option of withdrawalOptions; trackBy: trackByAmount"
         (click)="withdrawPoints(option)"
         [disabled]="((availablePoints$ | async) ?? 0) < option"
-        class="px-4 py-2 text-sm rounded-lg shadow
-               bg-green-600 text-white font-semibold
-               hover:bg-green-700
-               disabled:opacity-50 disabled:cursor-not-allowed transition"
+        class="px-6 py-3 rounded-lg text-sm font-medium
+               bg-emerald-600 text-white
+               hover:bg-emerald-700
+               disabled:opacity-50 disabled:cursor-not-allowed
+               transition-all duration-200 ease-in-out
+               shadow-sm hover:shadow-md
+               transform hover:-translate-y-0.5"
       >
-        {{ option }} pts
+        {{ option }} Points
       </button>
     </div>
   </div>
 
-  <!-- Remaining Points After Withdrawal -->
-  <div
-    *ngIf="remainingPoints !== undefined"
-    class="p-4 bg-white dark:bg-green-800 rounded-md shadow text-center"
-  >
-    <p class="text-sm text-gray-700 dark:text-gray-200">
-      Remaining Points (after last withdrawal):
-      <span class="font-bold text-green-700 dark:text-green-100">
-        {{ remainingPoints }}
-      </span>
+  <!-- Remaining Points (if any) -->
+  <div *ngIf="remainingPoints !== undefined"
+       class="bg-emerald-100 dark:bg-emerald-800/40 rounded-xl p-4 text-center">
+    <p class="text-emerald-700 dark:text-emerald-200">
+      Points Remaining After Withdrawal:
+      <span class="font-bold ml-2">{{ remainingPoints }}</span>
     </p>
   </div>
 
-  <!-- Withdrawal History Table -->
-  <div class="bg-white dark:bg-green-800 p-4 rounded-md shadow">
-    <h3 class="text-sm font-medium text-gray-800 dark:text-gray-100 mb-3">
-      Withdrawal History
-    </h3>
-
-    <!-- If no history, show a message -->
-
-
-    <div  *ngIf="withdrawals.length === 0" class="text-gray-500 text-center py-4 bg-gray-50 rounded-lg">
-      No withdrawals yet.
+  <!-- Transaction History -->
+  <div class="bg-white dark:bg-emerald-800/40 rounded-xl p-6 shadow-sm backdrop-blur-sm">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-emerald-800 dark:text-emerald-200 font-medium">Withdrawal History</h3>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+      </svg>
     </div>
 
-    <table
-      *ngIf="withdrawals.length > 0"
-      class="min-w-full text-left border-collapse"
-    >
-      <thead>
-        <tr class="border-b border-gray-200 dark:border-green-700">
-          <th
-            class="py-2 px-3 text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"
-          >
-            Date
-          </th>
-          <th
-            class="py-2 px-3 text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"
-          >
-            Points
-          </th>
-          <th
-            class="py-2 px-3 text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"
-          >
-            Money (Dh)
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let w of withdrawals"
-          class="border-b border-gray-100 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-700 transition"
-        >
-          <!-- Date -->
-          <td class="py-2 px-3 text-sm text-gray-700 dark:text-gray-100">
-            {{ w.timestamp | date: 'short' }}
-          </td>
+    <div *ngIf="withdrawals.length === 0"
+         class="text-center py-8 bg-emerald-50 dark:bg-emerald-800/20 rounded-xl">
+      <p class="text-emerald-600 dark:text-emerald-300">No withdrawals yet. Start recycling to earn points!</p>
+    </div>
 
-          <!-- Points used -->
-          <td class="py-2 px-3 text-sm text-green-700 dark:text-green-100 font-semibold">
-            {{ w.points }}
-          </td>
-
-          <!-- Money gained (Dh) -->
-          <td class="py-2 px-3 text-sm text-green-700 dark:text-green-100 font-semibold">
-            {{ w.money }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="withdrawals.length > 0" class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-emerald-100 dark:border-emerald-700">
+            <th class="py-3 px-4 text-left text-xs font-medium text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">Date</th>
+            <th class="py-3 px-4 text-left text-xs font-medium text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">Points</th>
+            <th class="py-3 px-4 text-left text-xs font-medium text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">Amount (Dh)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let w of withdrawals"
+              class="border-b border-emerald-50 dark:border-emerald-700/50 hover:bg-emerald-50 dark:hover:bg-emerald-800/60 transition-colors">
+            <td class="py-3 px-4 text-sm text-emerald-700 dark:text-emerald-200">
+              {{ w.timestamp | date: 'MMM d, y, h:mm a' }}
+            </td>
+            <td class="py-3 px-4 text-sm font-medium text-emerald-700 dark:text-emerald-200">
+              {{ w.points }}
+            </td>
+            <td class="py-3 px-4 text-sm font-medium text-emerald-700 dark:text-emerald-200">
+              {{ w.money }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

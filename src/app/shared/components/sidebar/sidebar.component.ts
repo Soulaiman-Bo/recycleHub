@@ -10,10 +10,9 @@ import { selectUser } from '../../../store/auth/auth.selectors';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
   store = inject(Store);
 
-  user$: Observable<User | null> = this.store.select(selectUser); 
+  user$: Observable<User | null> = this.store.select(selectUser);
 }

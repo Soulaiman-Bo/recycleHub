@@ -38,7 +38,6 @@ const BROKEN_IMAGE_URL = 'assets/broken.png';
     }),
   ],
   templateUrl: './collection-details-dialog.component.html',
-  styleUrl: './collection-details-dialog.component.css',
 })
 export class CollectionDetailsDialogComponent {
   BROKEN_IMAGE_URL = BROKEN_IMAGE_URL;

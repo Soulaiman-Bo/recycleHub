@@ -16,7 +16,6 @@ import { updateCollection } from '../../../store/collection/collections.actions'
   standalone: true,
   imports: [CommonModule],
   templateUrl: './collection-tracker.component.html',
-  styleUrl: './collection-tracker.component.css',
 })
 export class CollectionTrackerComponent implements OnInit {
   private store = inject(Store);

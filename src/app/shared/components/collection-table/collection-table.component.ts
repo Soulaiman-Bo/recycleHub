@@ -18,7 +18,6 @@ import { CollectionDetailsDialogComponent } from '../collection-details-dialog/c
   standalone: true,
   imports: [CommonModule],
   templateUrl: './collection-table.component.html',
-  styleUrl: './collection-table.component.css',
 })
 export class CollectionTableComponent {
   private store = inject(Store);

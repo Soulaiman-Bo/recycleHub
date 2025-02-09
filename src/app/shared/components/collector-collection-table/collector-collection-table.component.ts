@@ -18,7 +18,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './collector-collection-table.component.html',
-  styleUrl: './collector-collection-table.component.css',
 })
 export class CollectorCollectionTableComponent {
   private store = inject(Store);
