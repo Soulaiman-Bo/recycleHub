@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './core/guards/auth.guard';
 import { ProfileService } from './core/services/profile.service';
 import { UserProfilePageComponent } from './pages/profile/profile.component';
+import { UnauthorizedComponent } from './pages/error/unauthorized/unauthorized.component';
 
 export const routes: Routes = [
   {
@@ -12,6 +13,10 @@ export const routes: Routes = [
   {
     path: 'profile',
     component: UserProfilePageComponent,
+  },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedComponent,
   },
   {
     path: 'auth',
