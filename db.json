@@ -18,72 +18,40 @@
   ],
   "collections": [
     {
-      "id": "c50e",
+      "id": "b58c",
       "userId": "6vdmsbhs3",
       "wasteItems": [
         {
-          "type": "Paper",
+          "type": "Glass",
           "weight": 10
         }
       ],
       "photos": [],
-      "address": "dfdsf",
-      "city": "kech",
-      "date": "2025-03-05",
-      "timeSlot": "10:00-11:00",
-      "notes": "",
-      "status": "Pending"
-    },
-    {
-      "id": "7658",
-      "userId": "6vdmsbhs3",
-      "wasteItems": [
-        {
-          "type": "Paper",
-          "weight": 10
-        }
-      ],
-      "photos": [],
-      "address": "dfs",
+      "address": "sdfdsfsdf",
       "city": "kech",
       "date": "",
       "timeSlot": "11:00-12:00",
       "notes": "",
-      "status": "Pending"
+      "status": "Pending",
+      "collectorId": ""
     },
     {
-      "id": "64d7",
+      "id": "949e",
       "userId": "6vdmsbhs3",
       "wasteItems": [
         {
-          "type": "Metal",
-          "weight": 12
-        }
-      ],
-      "photos": [],
-      "address": "wsfgs",
-      "city": "kech",
-      "date": "",
-      "timeSlot": "12:00-13:00",
-      "notes": "",
-      "status": "Pending"
-    },
-    {
-      "id": "02ed",
-      "userId": "6vdmsbhs3",
-      "wasteItems": [
-        {
-          "type": "Metal",
+          "type": "Paper",
           "weight": 10
         }
       ],
       "photos": [],
-      "address": "xcv",
-      "city": "casa",
-      "date": "2025-02-18",
-      "timeSlot": "",
+      "address": "kech",
+      "city": "kech",
+      "date": "",
+      "timeSlot": "10:00-11:00",
       "notes": "",
-      "status": "Pending"
+      "status": "Accepted",
+      "collectorId": "c267s3t3i"
     }
   ]
 }
