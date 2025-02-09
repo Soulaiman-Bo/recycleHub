@@ -1,11 +1,11 @@
-<div class="h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+<div class=" bg-gray-50 dark:bg-gray-900 flex flex-col">
   <!-- Topbar: No defined height, dynamically adjusts based on content -->
   <app-topbar></app-topbar>
 
   <!-- Main: Takes up the remaining height after Topbar -->
   <main class="flex flex-1 overflow-hidden">
-    <app-sidebar></app-sidebar>
-    <div class="p-6 flex-1 overflow-auto">
+    <!-- <app-sidebar></app-sidebar> -->
+    <div class="p-6 container mx-auto flex-1 overflow-auto">
       <router-outlet></router-outlet>
     </div>
   </main>
