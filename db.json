@@ -89,5 +89,28 @@
       "status": "Completed",
       "collectorId": "c267s3t3i"
     }
+  ],
+  "withdrawals": [
+    {
+      "id": "3cde",
+      "userId": "6vdmsbhs3",
+      "points": 200,
+      "money": 120,
+      "timestamp": "2025-02-09T19:56:31.304Z"
+    },
+    {
+      "id": "99e2",
+      "userId": "6vdmsbhs3",
+      "points": 200,
+      "money": 120,
+      "timestamp": "2025-02-09T19:56:34.143Z"
+    },
+    {
+      "id": "b283",
+      "userId": "6vdmsbhs3",
+      "points": 100,
+      "money": 50,
+      "timestamp": "2025-02-09T19:56:36.163Z"
+    }
   ]
 }

@@ -1,32 +1,119 @@
-<div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-  <h2 class="text-lg font-semibold text-emerald-800 dark:text-emerald-400 mb-4">
+<div class="bg-green-50 dark:bg-green-900 p-6 rounded-lg shadow space-y-6">
+  <!-- Header Section -->
+  <h2 class="text-xl font-semibold text-green-800 dark:text-green-200">
     Withdraw Your Points
   </h2>
 
-  <!-- Display Available Points -->
-  <div class="text-gray-700 dark:text-gray-300 text-sm mb-4">
-    <p>Total Points: <strong>{{ totalPoints$ | async }}</strong></p>
+  <!-- Points Display Section -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+    <!-- Total Points -->
+    <div class="p-4 bg-white dark:bg-green-800 rounded-md shadow text-center w-full sm:w-1/2 mr-0 sm:mr-4">
+      <p class="text-sm text-gray-600 dark:text-gray-200">Total Points</p>
+      <p class="text-2xl font-bold text-green-700 dark:text-green-100">
+        {{ totalPoints$ | async }}
+      </p>
+    </div>
+
+    <!-- Available Points -->
+    <div class="p-4 bg-white dark:bg-green-800 rounded-md shadow text-center w-full sm:w-1/2">
+      <p class="text-sm text-gray-600 dark:text-gray-200">Available Points</p>
+      <p class="text-2xl font-bold text-green-700 dark:text-green-100">
+        {{ availablePoints$ | async }}
+      </p>
+    </div>
   </div>
 
-  <!-- Withdrawal Options -->
-  <div *ngIf="totalPoints$ | async as totalPoints">
-    <h3 class="text-sm font-medium text-gray-900 dark:text-white">Select Amount to Withdraw:</h3>
-    <div class="flex gap-4">
+  <!-- Withdrawal Buttons -->
+  <div class="bg-white dark:bg-green-800 p-4 rounded-md shadow">
+    <h3 class="text-sm font-medium text-gray-800 dark:text-gray-100 mb-3">
+      Select an Amount to Withdraw (in Points):
+    </h3>
+    <div class="flex flex-wrap gap-3">
       <button
         *ngFor="let option of withdrawalOptions; trackBy: trackByAmount"
         (click)="withdrawPoints(option)"
-        [disabled]="totalPoints < option"
-        class="px-4 py-2 text-sm rounded-lg bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50"
+        [disabled]="((availablePoints$ | async) ?? 0) < option"
+        class="px-4 py-2 text-sm rounded-lg shadow
+               bg-green-600 text-white font-semibold
+               hover:bg-green-700
+               disabled:opacity-50 disabled:cursor-not-allowed transition"
       >
-        {{ option }} Dh
+        {{ option }} pts
       </button>
     </div>
   </div>
 
   <!-- Remaining Points After Withdrawal -->
-  <div *ngIf="remainingPoints !== undefined">
-    <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
-      Remaining Points: <strong>{{ remainingPoints }}</strong>
+  <div
+    *ngIf="remainingPoints !== undefined"
+    class="p-4 bg-white dark:bg-green-800 rounded-md shadow text-center"
+  >
+    <p class="text-sm text-gray-700 dark:text-gray-200">
+      Remaining Points (after last withdrawal):
+      <span class="font-bold text-green-700 dark:text-green-100">
+        {{ remainingPoints }}
+      </span>
     </p>
+  </div>
+
+  <!-- Withdrawal History Table -->
+  <div class="bg-white dark:bg-green-800 p-4 rounded-md shadow">
+    <h3 class="text-sm font-medium text-gray-800 dark:text-gray-100 mb-3">
+      Withdrawal History
+    </h3>
+
+    <!-- If no history, show a message -->
+    <p
+      *ngIf="withdrawals.length === 0"
+      class="text-gray-500 dark:text-gray-300 text-sm"
+    >
+      No withdrawals yet.
+    </p>
+
+    <table
+      *ngIf="withdrawals.length > 0"
+      class="min-w-full text-left border-collapse"
+    >
+      <thead>
+        <tr class="border-b border-gray-200 dark:border-green-700">
+          <th
+            class="py-2 px-3 text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"
+          >
+            Date
+          </th>
+          <th
+            class="py-2 px-3 text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"
+          >
+            Points
+          </th>
+          <th
+            class="py-2 px-3 text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"
+          >
+            Money (Dh)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let w of withdrawals"
+          class="border-b border-gray-100 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-700 transition"
+        >
+          <!-- Date -->
+          <td class="py-2 px-3 text-sm text-gray-700 dark:text-gray-100">
+            {{ w.timestamp | date: 'short' }}
+          </td>
+
+          <!-- Points used -->
+          <td class="py-2 px-3 text-sm text-green-700 dark:text-green-100 font-semibold">
+            {{ w.points }}
+          </td>
+
+          <!-- Money gained (Dh) -->
+          <td class="py-2 px-3 text-sm text-green-700 dark:text-green-100 font-semibold">
+            {{ w.money }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
