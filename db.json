@@ -9,108 +9,13 @@
       "city": "Marrakech"
     },
     {
-      "id": "6vdmsbhs3",
-      "username": "gdsq",
-      "email": "tiniin.email@gmail.com",
-      "role": "individual",
-      "password": "tiniin.email@gmail.com"
+      "username": "tinin@gmail.com",
+      "email": "tinin@gmail.com",
+      "city": "casablanca ",
+      "photos": "data:image/jpeg;base64,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",
+      "id": "xx7g1x9mh"
     }
   ],
-  "collections": [
-    {
-      "id": "2121",
-      "userId": "6vdmsbhs3",
-      "wasteItems": [
-        {
-          "type": "Paper",
-          "weight": 11
-        }
-      ],
-      "photos": [],
-      "address": "safi",
-      "city": "kech",
-      "date": "2025-02-08",
-      "timeSlot": "11:00-12:00",
-      "notes": "",
-      "status": "Completed",
-      "collectorId": "c267s3t3i"
-    },
-    {
-      "id": "b673",
-      "userId": "6vdmsbhs3",
-      "wasteItems": [
-        {
-          "type": "Plastic",
-          "weight": 10
-        }
-      ],
-      "photos": [],
-      "address": "saffi",
-      "city": "kech",
-      "date": "2025-02-08",
-      "timeSlot": "11:00-12:00",
-      "notes": "",
-      "status": "Completed",
-      "collectorId": "c267s3t3i"
-    },
-    {
-      "id": "2d26",
-      "userId": "6vdmsbhs3",
-      "wasteItems": [
-        {
-          "type": "Plastic",
-          "weight": 10
-        }
-      ],
-      "photos": [],
-      "address": "dff",
-      "city": "kech",
-      "date": "2025-01-31",
-      "timeSlot": "11:00-12:00",
-      "notes": "",
-      "status": "Accepted",
-      "collectorId": "c267s3t3i"
-    },
-    {
-      "id": "0175",
-      "userId": "6vdmsbhs3",
-      "wasteItems": [
-        {
-          "type": "Metal",
-          "weight": 100
-        }
-      ],
-      "photos": [],
-      "address": "qqfqf",
-      "city": "kech",
-      "date": "2025-02-21",
-      "timeSlot": "12:00-13:00",
-      "notes": "",
-      "status": "Completed",
-      "collectorId": "c267s3t3i"
-    }
-  ],
-  "withdrawals": [
-    {
-      "id": "3cde",
-      "userId": "6vdmsbhs3",
-      "points": 200,
-      "money": 120,
-      "timestamp": "2025-02-09T19:56:31.304Z"
-    },
-    {
-      "id": "99e2",
-      "userId": "6vdmsbhs3",
-      "points": 200,
-      "money": 120,
-      "timestamp": "2025-02-09T19:56:34.143Z"
-    },
-    {
-      "id": "b283",
-      "userId": "6vdmsbhs3",
-      "points": 100,
-      "money": 50,
-      "timestamp": "2025-02-09T19:56:36.163Z"
-    }
-  ]
+  "collections": [],
+  "withdrawals": []
 }
