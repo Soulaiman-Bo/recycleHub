@@ -69,10 +69,16 @@
             <!-- Status Badge -->
             <td class="px-6 py-4 whitespace-nowrap">
               <span
-                *ngIf="collection.status === 'Completed'"
+                *ngIf="collection.status === 'Accepted'"
                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
               >
-                Completed
+                Accepted
+              </span>
+              <span
+                *ngIf="collection.status === 'In Progress'"
+                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200"
+              >
+                In Progress
               </span>
               <span
                 *ngIf="collection.status === 'Pending'"
@@ -81,10 +87,10 @@
                 Pending
               </span>
               <span
-                *ngIf="collection.status === 'In Progress'"
+                *ngIf="collection.status === 'Completed'"
                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200"
               >
-                In Progress
+                Completed
               </span>
               <span
                 *ngIf="collection.status === 'Rejected'"
@@ -99,11 +105,12 @@
               class="px-6 py-4 whitespace-nowrap text-sm"
               [ngClass]="{
                 'text-gray-500 dark:text-gray-400':
-                  collection.status === 'Pending',
+                  collection.status === 'Pending' ||
+                  collection.status === 'Accepted' ||
+                  collection.status === 'In Progress',
                 'text-red-500 dark:text-red-400':
                   collection.status === 'Rejected',
                 'text-green-500 dark:text-green-400':
-                  collection.status === 'In Progress' ||
                   collection.status === 'Completed'
               }"
             >
@@ -142,7 +149,9 @@
                     collection.status === 'Rejected'
                   )
                 "
-                (click)="onDeleteCollection(collection.id!); $event.stopPropagation()"
+                (click)="
+                  onDeleteCollection(collection.id!); $event.stopPropagation()
+                "
                 class="font-medium hover:underline"
                 [ngClass]="{
                   'text-red-600 dark:text-red-500':

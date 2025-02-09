@@ -125,6 +125,7 @@ export class PickupRequestDialogComponent {
       timeSlot: this.form.value.timeSlot,
       notes: this.form.value.notes,
       status: this.form.value.status,
+      collectorId: ""
     };
 
     if (!this.data?.collection?.id) {
