@@ -55,4 +55,13 @@ export class CollectorCollectionTableComponent {
     };
     this.store.dispatch(updateCollection({ collection: updatedCollection }));
   }
+
+  rejectCollection(collection: Collection) {
+    const updatedCollection: Collection = {
+      ...collection,
+      status: CollectionStatus.REJECTED,
+      collectorId: this.currentUserId$,
+    };
+    this.store.dispatch(updateCollection({ collection: updatedCollection }));
+  }
 }
