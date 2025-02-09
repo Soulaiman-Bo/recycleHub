@@ -34,3 +34,21 @@ export const selectPendingCollectionsForCollector = createSelector(
     );
   }
 );
+
+export const selectAcceptedCollectionsForCollector = createSelector(
+  selectAllCollections,
+  selectUser,
+  (collections, user) => {
+    if (!user?.city) return [];
+
+    let cols =  collections.filter(
+      (c) =>
+        c.collectorId === user.id
+    );
+
+    console.log({cols});
+
+    return cols
+  }
+);
+

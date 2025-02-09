@@ -18,39 +18,75 @@
   ],
   "collections": [
     {
-      "id": "b58c",
-      "userId": "6vdmsbhs3",
-      "wasteItems": [
-        {
-          "type": "Glass",
-          "weight": 10
-        }
-      ],
-      "photos": [],
-      "address": "sdfdsfsdf",
-      "city": "kech",
-      "date": "",
-      "timeSlot": "11:00-12:00",
-      "notes": "",
-      "status": "Pending",
-      "collectorId": ""
-    },
-    {
-      "id": "949e",
+      "id": "2121",
       "userId": "6vdmsbhs3",
       "wasteItems": [
         {
           "type": "Paper",
+          "weight": 11
+        }
+      ],
+      "photos": [],
+      "address": "safi",
+      "city": "kech",
+      "date": "2025-02-08",
+      "timeSlot": "11:00-12:00",
+      "notes": "",
+      "status": "Completed",
+      "collectorId": "c267s3t3i"
+    },
+    {
+      "id": "b673",
+      "userId": "6vdmsbhs3",
+      "wasteItems": [
+        {
+          "type": "Plastic",
           "weight": 10
         }
       ],
       "photos": [],
-      "address": "kech",
+      "address": "saffi",
       "city": "kech",
-      "date": "",
-      "timeSlot": "10:00-11:00",
+      "date": "2025-02-08",
+      "timeSlot": "11:00-12:00",
+      "notes": "",
+      "status": "Completed",
+      "collectorId": "c267s3t3i"
+    },
+    {
+      "id": "2d26",
+      "userId": "6vdmsbhs3",
+      "wasteItems": [
+        {
+          "type": "Plastic",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "dff",
+      "city": "kech",
+      "date": "2025-01-31",
+      "timeSlot": "11:00-12:00",
       "notes": "",
       "status": "Accepted",
+      "collectorId": "c267s3t3i"
+    },
+    {
+      "id": "0175",
+      "userId": "6vdmsbhs3",
+      "wasteItems": [
+        {
+          "type": "Metal",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "qqfqf",
+      "city": "kech",
+      "date": "2025-02-21",
+      "timeSlot": "12:00-13:00",
+      "notes": "",
+      "status": "In Progress",
       "collectorId": "c267s3t3i"
     }
   ]
