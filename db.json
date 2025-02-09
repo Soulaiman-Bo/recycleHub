@@ -32,8 +32,44 @@
       "date": "",
       "timeSlot": "11:00-12:00",
       "notes": "",
-      "status": "Pending",
-      "collectorId": ""
+      "status": "Completed",
+      "collectorId": "c267s3t3i"
+    },
+    {
+      "id": "b58c",
+      "userId": "6vdmsbhs3",
+      "wasteItems": [
+        {
+          "type": "Glass",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "sdfdsfsdf",
+      "city": "kech",
+      "date": "",
+      "timeSlot": "11:00-12:00",
+      "notes": "",
+      "status": "In Progress",
+      "collectorId": "c267s3t3i"
+    },
+    {
+      "id": "b58c",
+      "userId": "6vdmsbhs3",
+      "wasteItems": [
+        {
+          "type": "Glass",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "sdfdsfsdf",
+      "city": "kech",
+      "date": "",
+      "timeSlot": "11:00-12:00",
+      "notes": "",
+      "status": "Accepted",
+      "collectorId": "c267s3t3i"
     },
     {
       "id": "949e",
@@ -50,7 +86,7 @@
       "date": "",
       "timeSlot": "10:00-11:00",
       "notes": "",
-      "status": "Accepted",
+      "status": "Completed",
       "collectorId": "c267s3t3i"
     }
   ]
