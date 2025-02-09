@@ -18,25 +18,6 @@
       "id": "xx7g1x9mh"
     }
   ],
-  "collections": [
-    {
-      "id": "89a0",
-      "userId": "xx7g1x9mh",
-      "wasteItems": [
-        {
-          "type": "Paper",
-          "weight": 10
-        }
-      ],
-      "photos": [],
-      "address": "dfdgsdg",
-      "city": "Marrakech",
-      "date": "",
-      "timeSlot": "11:00-12:00",
-      "notes": "",
-      "status": "Rejected",
-      "collectorId": "c267s3t3i"
-    }
-  ],
+  "collections": [],
   "withdrawals": []
 }
