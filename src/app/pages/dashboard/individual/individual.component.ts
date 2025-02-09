@@ -4,6 +4,7 @@ import { PickupRequestDialogComponent } from '../../../shared/components/pickup-
 import { CommonModule } from '@angular/common';
 import { CollectionTableComponent } from '../../../shared/components/collection-table/collection-table.component';
 import { StatsOverviewComponent } from '../../../shared/components/stats-overview/stats-overview.component';
+import { PointsWithdrawalComponent } from '../../../shared/components/points-withdrawal/points-withdrawal.component';
 
 @Component({
   selector: 'app-individual',
@@ -13,6 +14,7 @@ import { StatsOverviewComponent } from '../../../shared/components/stats-overvie
     CommonModule,
     CollectionTableComponent,
     StatsOverviewComponent,
+    PointsWithdrawalComponent
   ],
   templateUrl: './individual.component.html',
   styleUrl: './individual.component.css',
