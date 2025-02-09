@@ -2,6 +2,7 @@ export enum CollectionStatus {
   PENDING = 'Pending',
   IN_PROGRESS = 'In Progress',
   COMPLETED = 'Completed',
+  ACCEPTED = 'Accepted',
   REJECTED = 'Rejected'
 }
 
@@ -20,6 +21,7 @@ export interface WasteItem {
 export interface Collection {
   id?: number;
   userId: string;
+  collectorId : string;
   wasteItems: WasteItem[];
   photos: string[];
   address: string;
