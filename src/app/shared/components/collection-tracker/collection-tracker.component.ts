@@ -1,19 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import {
   Collection,
   CollectionStatus,
   WasteItem,
   WasteType,
 } from '../../../core/models/Collection.model';
-import { Store } from '@ngrx/store';
-import { combineLatest, map, Observable } from 'rxjs';
-import {
-  selectAcceptedCollectionsForCollector,
-  selectAllCollections,
-} from '../../../store/collection/collections.selectors';
-import { selectUser } from '../../../store/auth/auth.selectors';
-import { getCollections, updateCollection } from '../../../store/collection/collections.actions';
+import { selectAcceptedCollectionsForCollector } from '../../../store/collection/collections.selectors';
+import { updateCollection } from '../../../store/collection/collections.actions';
 
 @Component({
   selector: 'app-collection-tracker',
@@ -22,57 +18,34 @@ import { getCollections, updateCollection } from '../../../store/collection/coll
   templateUrl: './collection-tracker.component.html',
   styleUrl: './collection-tracker.component.css',
 })
-export class CollectionTrackerComponent {
+export class CollectionTrackerComponent implements OnInit {
   private store = inject(Store);
 
-  // @Input() collections: Collection[] = [];
+  collections$!: Observable<Collection[]>;
 
   protected readonly WasteType = WasteType;
   protected readonly CollectionStatus = CollectionStatus;
-  protected collections$!: Observable<Collection[]>;
 
-  protected readonly statusSteps = [
+  protected readonly statusSteps: CollectionStatus[] = [
     CollectionStatus.ACCEPTED,
     CollectionStatus.IN_PROGRESS,
     CollectionStatus.COMPLETED,
   ];
 
-  readonly wasteTypeStyles: Record<
-    WasteType,
-    { bgClass: string; textClass: string }
-  > = {
-    [WasteType.PLASTIC]: {
-      bgClass: 'bg-blue-100 dark:bg-blue-900',
-      textClass: 'text-blue-700 dark:text-blue-300',
-    },
-    [WasteType.GLASS]: {
-      bgClass: 'bg-amber-100 dark:bg-amber-900',
-      textClass: 'text-amber-700 dark:text-amber-300',
-    },
-    [WasteType.PAPER]: {
-      bgClass: 'bg-emerald-100 dark:bg-emerald-900',
-      textClass: 'text-emerald-700 dark:text-emerald-300',
-    },
-    [WasteType.METAL]: {
-      bgClass: 'bg-zinc-100 dark:bg-zinc-900',
-      textClass: 'text-zinc-700 dark:text-zinc-300',
-    },
+  // Waste type styling map
+  readonly wasteTypeStyles: Record<WasteType, { bgClass: string; textClass: string }> = {
+    [WasteType.PLASTIC]: { bgClass: 'bg-blue-100 dark:bg-blue-900', textClass: 'text-blue-700 dark:text-blue-300' },
+    [WasteType.GLASS]: { bgClass: 'bg-amber-100 dark:bg-amber-900', textClass: 'text-amber-700 dark:text-amber-300' },
+    [WasteType.PAPER]: { bgClass: 'bg-emerald-100 dark:bg-emerald-900', textClass: 'text-emerald-700 dark:text-emerald-300' },
+    [WasteType.METAL]: { bgClass: 'bg-zinc-100 dark:bg-zinc-900', textClass: 'text-zinc-700 dark:text-zinc-300' },
   };
 
   ngOnInit() {
-   // this.store.dispatch(getCollections());
-    this.collections$ = this.store.select(
-      selectAcceptedCollectionsForCollector
-    );
+    this.collections$ = this.store.select(selectAcceptedCollectionsForCollector);
   }
 
-
-  // Old
-
-  getStepStatus(
-    collection: Collection,
-    step: CollectionStatus
-  ): 'completed' | 'current' | 'pending' | 'rejected' {
+  /** Get current step status for progress tracking */
+  getStepStatus(collection: Collection, step: CollectionStatus): 'completed' | 'current' | 'pending' | 'rejected' {
     const statusOrder = [
       CollectionStatus.PENDING,
       CollectionStatus.ACCEPTED,
@@ -85,28 +58,28 @@ export class CollectionTrackerComponent {
     const currentIndex = statusOrder.indexOf(collection.status);
     const stepIndex = statusOrder.indexOf(step);
 
-    if (stepIndex < currentIndex) return 'completed';
-    if (stepIndex === currentIndex) return 'current';
-    return 'pending';
+    return stepIndex < currentIndex ? 'completed' : stepIndex === currentIndex ? 'current' : 'pending';
   }
 
+  /** Calculate total waste weight */
   getTotalWeight(wasteItems: WasteItem[]): number {
     return wasteItems.reduce((total, item) => total + item.weight, 0);
   }
 
+  /** Format date */
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString();
   }
 
+  /** Update collection status */
   protected updateStatus(collection: Collection, newStatus: CollectionStatus): void {
     if (collection.status === newStatus) return;
-    
-    const updatedCollection: Collection = {
-      ...collection,
-      status: newStatus
-    };
 
-    this.store.dispatch(updateCollection({ collection: updatedCollection }));
+    this.store.dispatch(updateCollection({ collection: { ...collection, status: newStatus } }));
   }
 
+  /** TrackBy function for collection list */
+  trackByCollectionId(index: number, collection: Collection): number {
+    return collection.id!;
+  }
 }
