@@ -1,0 +1,32 @@
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+  <h2 class="text-lg font-semibold text-emerald-800 dark:text-emerald-400 mb-4">
+    Withdraw Your Points
+  </h2>
+
+  <!-- Display Available Points -->
+  <div class="text-gray-700 dark:text-gray-300 text-sm mb-4">
+    <p>Total Points: <strong>{{ totalPoints$ | async }}</strong></p>
+  </div>
+
+  <!-- Withdrawal Options -->
+  <div *ngIf="totalPoints$ | async as totalPoints">
+    <h3 class="text-sm font-medium text-gray-900 dark:text-white">Select Amount to Withdraw:</h3>
+    <div class="flex gap-4">
+      <button
+        *ngFor="let option of withdrawalOptions; trackBy: trackByAmount"
+        (click)="withdrawPoints(option)"
+        [disabled]="totalPoints < option"
+        class="px-4 py-2 text-sm rounded-lg bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50"
+      >
+        {{ option }} Dh
+      </button>
+    </div>
+  </div>
+
+  <!-- Remaining Points After Withdrawal -->
+  <div *ngIf="remainingPoints !== undefined">
+    <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+      Remaining Points: <strong>{{ remainingPoints }}</strong>
+    </p>
+  </div>
+</div>
