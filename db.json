@@ -18,73 +18,73 @@
   ],
   "collections": [
     {
-      "id": "b58c",
+      "id": "2121",
       "userId": "6vdmsbhs3",
       "wasteItems": [
         {
-          "type": "Glass",
-          "weight": 10
+          "type": "Paper",
+          "weight": 11
         }
       ],
       "photos": [],
-      "address": "sdfdsfsdf",
+      "address": "safi",
       "city": "kech",
-      "date": "",
+      "date": "2025-02-08",
       "timeSlot": "11:00-12:00",
       "notes": "",
       "status": "Completed",
       "collectorId": "c267s3t3i"
     },
     {
-      "id": "b58c",
+      "id": "b673",
       "userId": "6vdmsbhs3",
       "wasteItems": [
         {
-          "type": "Glass",
+          "type": "Plastic",
           "weight": 10
         }
       ],
       "photos": [],
-      "address": "sdfdsfsdf",
+      "address": "saffi",
       "city": "kech",
-      "date": "",
+      "date": "2025-02-08",
       "timeSlot": "11:00-12:00",
       "notes": "",
-      "status": "In Progress",
+      "status": "Completed",
       "collectorId": "c267s3t3i"
     },
     {
-      "id": "b58c",
+      "id": "2d26",
       "userId": "6vdmsbhs3",
       "wasteItems": [
         {
-          "type": "Glass",
+          "type": "Plastic",
           "weight": 10
         }
       ],
       "photos": [],
-      "address": "sdfdsfsdf",
+      "address": "dff",
       "city": "kech",
-      "date": "",
+      "date": "2025-01-31",
       "timeSlot": "11:00-12:00",
       "notes": "",
-      "status": "Accepted",
+      "status": "Completed",
       "collectorId": "c267s3t3i"
     },
     {
-      "id": "949e",
+      "id": "0175",
       "userId": "6vdmsbhs3",
       "wasteItems": [
         {
-          "type": "Paper",
+          "type": "Metal",
           "weight": 10
         }
       ],
       "photos": [],
-      "address": "kech",
+      "address": "qqfqf",
       "city": "kech",
-      "date": "",
-      "timeSlot": "10:00-11:00",
+      "date": "2025-02-21",
+      "timeSlot": "12:00-13:00",
       "notes": "",
       "status": "Completed",
       "collectorId": "c267s3t3i"
