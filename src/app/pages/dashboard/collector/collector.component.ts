@@ -13,22 +13,5 @@ import { Collection, CollectionStatus, WasteType } from '../../../core/models/Co
   styleUrl: './collector.component.css'
 })
 export class CollectorComponent {
-  collections: Collection[] = [
-    {
-      id: 1,
-      userId: 'user123',
-      collectorId: 'collector456',
-      wasteItems: [
-        { type: WasteType.PLASTIC, weight: 10 },
-        { type: WasteType.GLASS, weight: 15 }
-      ],
-      photos: ['photo1.jpg', 'photo2.jpg'],
-      address: '123 Green Street',
-      city: 'Eco City',
-      date: '2024-02-09',
-      timeSlot: '09:00-11:00',
-      notes: 'Please handle with care',
-      status: CollectionStatus.IN_PROGRESS
-    }
-  ];
+
 }

@@ -77,7 +77,7 @@
       "wasteItems": [
         {
           "type": "Metal",
-          "weight": 10
+          "weight": 100
         }
       ],
       "photos": [],
@@ -86,7 +86,7 @@
       "date": "2025-02-21",
       "timeSlot": "12:00-13:00",
       "notes": "",
-      "status": "In Progress",
+      "status": "Completed",
       "collectorId": "c267s3t3i"
     }
   ]
