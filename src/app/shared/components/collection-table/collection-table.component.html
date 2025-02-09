@@ -39,9 +39,21 @@
             </th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+        <tbody  *ngIf="collections$ | async as collections" class="divide-y divide-gray-200 dark:divide-gray-700">
+          <!-- Display an empty message if there are no collections -->
+          <tr *ngIf="collections.length === 0">
+            <td
+              colspan="6"
+              class="px-6 py-4 text-center text-sm text-gray-900 dark:text-white"
+            >
+              <div class="text-gray-500 text-center py-4 bg-gray-50 rounded-lg">
+                No collections available.
+              </div>
+            </td>
+          </tr>
+
           <tr
-            *ngFor="let collection of collections$ | async"
+          *ngFor="let collection of collections"
             class="cursor-pointer hover:bg-gray-50"
             (click)="openDetails(collection)"
           >

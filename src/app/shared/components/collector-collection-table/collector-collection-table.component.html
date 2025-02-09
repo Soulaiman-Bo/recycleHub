@@ -39,8 +39,24 @@
             </th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-          <tr *ngFor="let collection of collections$ | async">
+        <tbody
+          class="divide-y divide-gray-200 dark:divide-gray-700"
+          *ngIf="collections$ | async as collections"
+        >
+          <!-- Display an empty message if there are no collections -->
+          <tr *ngIf="collections.length === 0">
+            <td
+              colspan="6"
+              class="px-6 py-4 text-center text-sm text-gray-900 dark:text-white"
+            >
+              <div class="text-gray-500 text-center py-4 bg-gray-50 rounded-lg">
+                No collections available.
+              </div>
+            </td>
+          </tr>
+
+          <!-- Otherwise, list each collection -->
+          <tr *ngFor="let collection of collections">
             <td
               class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white"
             >
@@ -66,12 +82,18 @@
             >
               {{ collection.timeSlot }}
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 flex gap-2 whitespace-nowrap">
               <button
                 (click)="acceptCollection(collection)"
                 class="px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700"
               >
                 Accept
+              </button>
+              <button
+                (click)="rejectCollection(collection)"
+                class="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700"
+              >
+                Reject
               </button>
             </td>
           </tr>

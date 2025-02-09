@@ -6,7 +6,7 @@ import { TopbarComponent } from '../../../shared/components/topbar/topbar.compon
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, TopbarComponent],
+  imports: [RouterOutlet, TopbarComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })

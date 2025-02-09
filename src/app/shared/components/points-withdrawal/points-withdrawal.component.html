@@ -63,12 +63,11 @@
     </h3>
 
     <!-- If no history, show a message -->
-    <p
-      *ngIf="withdrawals.length === 0"
-      class="text-gray-500 dark:text-gray-300 text-sm"
-    >
+
+
+    <div  *ngIf="withdrawals.length === 0" class="text-gray-500 text-center py-4 bg-gray-50 rounded-lg">
       No withdrawals yet.
-    </p>
+    </div>
 
     <table
       *ngIf="withdrawals.length > 0"

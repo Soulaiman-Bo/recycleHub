@@ -32,7 +32,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authSubscription = this.isAuthenticated$.subscribe((isAuthenticated) => {
       if (isAuthenticated) {
-        setTimeout(() => this.router.navigate(['/']), 1500);
+        setTimeout(() => this.router.navigate(['/dashboard']),);
       }
     });
   }

@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { User } from '../../../core/models/user.model';
+import { selectUser } from '../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-topbar',
@@ -9,6 +13,8 @@ import { Component } from '@angular/core';
   styleUrl: './topbar.component.css',
 })
 export class TopbarComponent {
+  store = inject(Store);
+
   isDarkMode = false;
 
   toggleDarkMode() {
@@ -19,4 +25,7 @@ export class TopbarComponent {
       document.documentElement.classList.remove('dark');
     }
   }
+
+
+    user$: Observable<User | null> = this.store.select(selectUser);
 }
