@@ -18,7 +18,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './collector-collection-table.component.html',
-  styleUrl: './collector-collection-table.component.css',
 })
 export class CollectorCollectionTableComponent {
   private store = inject(Store);
@@ -60,6 +59,15 @@ export class CollectorCollectionTableComponent {
     const updatedCollection: Collection = {
       ...collection,
       status: CollectionStatus.REJECTED,
+      collectorId: this.currentUserId$,
+    };
+    this.store.dispatch(updateCollection({ collection: updatedCollection }));
+  }
+
+  runCollection(collection: Collection) {
+    const updatedCollection: Collection = {
+      ...collection,
+      status: CollectionStatus.RUNNING,
       collectorId: this.currentUserId$,
     };
     this.store.dispatch(updateCollection({ collection: updatedCollection }));

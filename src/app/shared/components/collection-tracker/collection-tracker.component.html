@@ -1,119 +1,164 @@
-<div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-  <h2 class="text-lg font-semibold text-emerald-800 dark:text-emerald-400 mb-6">
-    My Active Collections
-  </h2>
+<div
+  class="bg-slate-100 dark:bg-emerald-800/40 rounded-xl p-6 shadow-sm backdrop-blur-sm"
+>
+  <!-- Header -->
+  <div class="flex items-center space-x-3 mb-6">
+    <h3 class="text-emerald-800 dark:text-emerald-200 text-xl font-medium">
+      My Active Collections
+    </h3>
+  </div>
 
+  <!-- Table Container -->
   <div class="space-y-4">
     @for (collection of collections$ | async; track collection.id) {
-      <div class="bg-gray-50 dark:bg-gray-700 flex justify-between gap-4 rounded-lg p-4">
-        <!-- Collection Info -->
-        <div class="flex items-start space-x-4">
-          <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900 rounded-full flex items-center justify-center">
-            <svg
-              class="w-6 h-6 text-emerald-600 dark:text-emerald-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              ></path>
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-sm font-medium text-gray-900 dark:text-white">
-              Collection #{{ collection.id }}
-            </h3>
-            <!-- Waste Types -->
-            <div class="flex flex-wrap gap-2 mt-1">
-              @for (item of collection.wasteItems; track item.type) {
-                <span
-                  [class]="'px-2 py-1 text-xs rounded-full ' +
-                    wasteTypeStyles[item.type].bgClass + ' ' +
-                    wasteTypeStyles[item.type].textClass"
-                >
-                  {{ item.type }} - {{ item.weight }}kg
-                </span>
-              }
-            </div>
-          </div>
+    <div
+      class="bg-white dark:bg-gray-700 flex justify-between gap-4 rounded-lg p-4"
+    >
+      <!-- Collection Info -->
+      <div class="flex items-start space-x-4">
+        <div
+          class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900 rounded-full flex items-center justify-center"
+        >
+          <svg
+            class="w-6 h-6 text-emerald-600 dark:text-emerald-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            ></path>
+          </svg>
         </div>
-
-        <!-- Progress Steps -->
-        <div class="relative flex-1 max-w-5xl">
-          <ol class="flex items-center w-full mb-4">
-            @for (status of statusSteps; track status) {
-              <li class="flex items-center" [class.w-full]="status !== CollectionStatus.COMPLETED ">
-                <div class="flex flex-col items-center">
-                  <button
-                    (click)="updateStatus(collection, status)"
-                    [disabled]="getStepStatus(collection, status) === 'rejected'"
-                    [class]="'w-8 h-8 rounded-full flex items-center justify-center ' +
-                      (getStepStatus(collection, status) === 'completed' ?
-                        'bg-emerald-100 dark:bg-emerald-900' :
-                      getStepStatus(collection, status) === 'current' ?
-                        'bg-blue-100 dark:bg-blue-900 animate-pulse' :
-                      getStepStatus(collection, status) === 'rejected' ?
-                        'bg-red-100 dark:bg-red-900' :
-                        'bg-gray-100 dark:bg-gray-700')"
-                  >
-                    <svg
-                      [class]="'w-4 h-4 ' +
-                        (getStepStatus(collection, status) === 'completed' ?
-                          'text-emerald-600 dark:text-emerald-400' :
-                        getStepStatus(collection, status) === 'current' ?
-                          'text-blue-600 dark:text-blue-400' :
-                        getStepStatus(collection, status) === 'rejected' ?
-                          'text-red-600 dark:text-red-400' :
-                          'text-gray-400 dark:text-gray-500')"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        [attr.d]="status === CollectionStatus.IN_PROGRESS ?
-                          'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' :
-                          'M5 13l4 4L19 7'"
-                      ></path>
-                    </svg>
-                  </button>
-                  <span
-                    [class]="'text-xs mt-1 ' +
-                      (getStepStatus(collection, status) === 'completed' ?
-                        'text-emerald-600 dark:text-emerald-400' :
-                      getStepStatus(collection, status) === 'current' ?
-                        'text-blue-600 dark:text-blue-400' :
-                      getStepStatus(collection, status) === 'rejected' ?
-                        'text-red-600 dark:text-red-400' :
-                        'text-gray-400 dark:text-gray-500')"
-                  >
-                    {{ status }}
-                  </span>
-                </div>
-                @if (status !== CollectionStatus.COMPLETED) {
-                  <div
-                    [class]="'flex-1 h-1 mx-2 ' +
-                      (getStepStatus(collection, status) === 'completed' ?
-                        'bg-emerald-600 dark:bg-emerald-500' :
-                        'bg-gray-200 dark:bg-gray-600')"
-                  ></div>
-                }
-              </li>
+        <div>
+          <h3 class="text-sm font-medium text-gray-900 dark:text-white">
+            Collection #{{ collection.id }}
+          </h3>
+          <!-- Waste Types -->
+          <div class="flex flex-wrap gap-2 mt-1">
+            @for (item of collection.wasteItems; track item.type) {
+            <span
+              [class]="
+                'px-2 py-1 text-xs rounded-full ' +
+                wasteTypeStyles[item.type].bgClass +
+                ' ' +
+                wasteTypeStyles[item.type].textClass
+              "
+            >
+              {{ item.type }} - {{ item.weight }}kg
+            </span>
             }
-          </ol>
-
-          <!-- Total Weight -->
-          <div class="text-right text-xs text-gray-500 dark:text-gray-400">
-            Total Weight: {{ getTotalWeight(collection.wasteItems) }}kg
           </div>
         </div>
       </div>
+
+
+
+      <!-- Progress Steps -->
+      <div class="relative flex-1 flex gap-4 max-w-5xl">
+
+        <!-- @if (collection.status === CollectionStatus.RUNNING){
+          <div>
+            <button
+              class="w-8 h-8 text-gray-600 rounded-full flex items-center justify-center bg-red-100 dark:bg-red-900"
+              (click)="updateStatus(collection, CollectionStatus.REJECTED)"
+            >
+              X
+            </button>
+
+            <div class="flex text-gray-600 flex-col items-center">
+              <button
+                (click)="updateStatus(collection, CollectionStatus.REJECTED)"
+              ></button>
+              <span> Reject </span>
+            </div>
+          </div>
+          } -->
+
+        <ol class="flex items-center w-full mb-4">
+          @for (status of statusSteps; track status) {
+          <li
+            class="flex items-center"
+            [class.w-full]="status !== CollectionStatus.COMPLETED"
+          >
+            <div class="flex flex-col items-center">
+              <button
+                (click)="updateStatus(collection, status)"
+                [disabled]="
+                  getStepStatus(collection, status) === 'rejected' ||
+                  getStepStatus(collection, status) === 'completed'
+                "
+                [class]="
+                  'w-8 h-8 rounded-full flex items-center justify-center ' +
+                  (getStepStatus(collection, status) === 'completed'
+                    ? 'bg-emerald-100 dark:bg-emerald-900'
+                    : getStepStatus(collection, status) === 'current'
+                    ? 'bg-blue-100 dark:bg-blue-900 animate-pulse'
+                    : getStepStatus(collection, status) === 'rejected'
+                    ? 'bg-red-100 dark:bg-red-900'
+                    : 'bg-gray-100 dark:bg-gray-700')
+                "
+              >
+                <svg
+                  [class]="
+                    'w-4 h-4 ' +
+                    (getStepStatus(collection, status) === 'completed'
+                      ? 'text-emerald-600 dark:text-emerald-400'
+                      : getStepStatus(collection, status) === 'current'
+                      ? 'text-blue-600 dark:text-blue-400'
+                      : getStepStatus(collection, status) === 'rejected'
+                      ? 'text-red-600 dark:text-red-400'
+                      : 'text-gray-400 dark:text-gray-500')
+                  "
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    [attr.d]="
+                      status === CollectionStatus.IN_PROGRESS
+                        ? 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
+                        : 'M5 13l4 4L19 7'
+                    "
+                  ></path>
+                </svg>
+              </button>
+              <span
+                [class]="
+                  'text-xs mt-1 ' +
+                  (getStepStatus(collection, status) === 'completed'
+                    ? 'text-emerald-600 dark:text-emerald-400'
+                    : getStepStatus(collection, status) === 'current'
+                    ? 'text-blue-600 dark:text-blue-400'
+                    : getStepStatus(collection, status) === 'rejected'
+                    ? 'text-red-600 dark:text-red-400'
+                    : 'text-gray-400 dark:text-gray-500')
+                "
+              >
+                {{ status }}
+              </span>
+            </div>
+            @if (status !== CollectionStatus.COMPLETED) {
+            <div
+              [class]="
+                'flex-1 h-1 mx-2 ' +
+                (getStepStatus(collection, status) === 'completed'
+                  ? 'bg-emerald-600 dark:bg-emerald-500'
+                  : 'bg-gray-200 dark:bg-gray-600')
+              "
+            ></div>
+            }
+          </li>
+          }
+        </ol>
+      </div>
+    </div>
     }
   </div>
 </div>

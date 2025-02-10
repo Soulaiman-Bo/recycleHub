@@ -3,8 +3,9 @@ import { User } from '../../core/models/user.model';
 
 export const signUp = createAction(
   '[Auth] Sign Up',
-  props<{ username: string; email: string; password: string; role?: string }>()
+  props<{ username: string; email: string; password: string; role?: string, address: string, city: string  }>()
 );
+
 
 export const signUpSuccess = createAction(
   '[Auth] Sign Up Success',

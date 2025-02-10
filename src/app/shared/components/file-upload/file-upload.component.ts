@@ -14,7 +14,6 @@ import { heroPhoto, heroXMark, heroCloudArrowUp, heroDocument } from '@ng-icons/
       }),
     ],
   templateUrl: './file-upload.component.html',
-  styleUrl: './file-upload.component.css',
   styles: [`
     :host {
       display: block;

@@ -42,7 +42,6 @@ import {
       heroExclamationCircle,
     }),
   ],
-  styleUrl: './waste-test.component.css',
   styles: [
     `
       :host {

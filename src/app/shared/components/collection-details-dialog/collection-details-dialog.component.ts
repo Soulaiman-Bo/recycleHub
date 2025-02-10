@@ -38,7 +38,6 @@ const BROKEN_IMAGE_URL = 'assets/broken.png';
     }),
   ],
   templateUrl: './collection-details-dialog.component.html',
-  styleUrl: './collection-details-dialog.component.css',
 })
 export class CollectionDetailsDialogComponent {
   BROKEN_IMAGE_URL = BROKEN_IMAGE_URL;
@@ -47,9 +46,6 @@ export class CollectionDetailsDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: { collection: Collection }
   ) {}
 
-  getCollectorName(): string {
-    return 'John Doe';
-  }
 
   onImageError(event: Event) {
     const element = event.target as HTMLImageElement;

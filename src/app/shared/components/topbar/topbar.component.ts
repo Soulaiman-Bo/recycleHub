@@ -4,13 +4,13 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from '../../../core/models/user.model';
 import { selectUser } from '../../../store/auth/auth.selectors';
+import { logout } from '../../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './topbar.component.html',
-  styleUrl: './topbar.component.css',
 })
 export class TopbarComponent {
   store = inject(Store);
@@ -26,6 +26,9 @@ export class TopbarComponent {
     }
   }
 
+  user$: Observable<User | null> = this.store.select(selectUser);
 
-    user$: Observable<User | null> = this.store.select(selectUser);
+  onLogout() {
+    this.store.dispatch(logout());
+  }
 }

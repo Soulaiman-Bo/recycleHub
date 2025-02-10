@@ -27,14 +27,10 @@ export class WithdrawalService {
     });
   }
 
-  /** Get all withdrawals for the current user */
   getUserWithdrawals(): Observable<Withdrawal[]> {
     return this.http.get<Withdrawal[]>(`${this.apiUrl}?userId=${this.userId}`);
   }
 
-  /**
-   * Save a new withdrawal record with 'points' and 'money'.
-   */
   saveWithdrawal(points: number, money: number): Observable<Withdrawal> {
     const withdrawal: Withdrawal = {
       userId: this.userId,

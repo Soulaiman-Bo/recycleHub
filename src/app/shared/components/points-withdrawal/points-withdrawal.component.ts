@@ -19,7 +19,6 @@ import { Withdrawal, WithdrawalService } from '../../../core/services/withdrawal
   standalone: true,
   imports: [CommonModule],
   templateUrl: './points-withdrawal.component.html',
-  styleUrls: ['./points-withdrawal.component.css'],
 })
 export class PointsWithdrawalComponent implements OnInit {
   private store = inject(Store);

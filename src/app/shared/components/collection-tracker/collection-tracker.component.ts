@@ -16,7 +16,6 @@ import { updateCollection } from '../../../store/collection/collections.actions'
   standalone: true,
   imports: [CommonModule],
   templateUrl: './collection-tracker.component.html',
-  styleUrl: './collection-tracker.component.css',
 })
 export class CollectionTrackerComponent implements OnInit {
   private store = inject(Store);
@@ -32,7 +31,6 @@ export class CollectionTrackerComponent implements OnInit {
     CollectionStatus.COMPLETED,
   ];
 
-  // Waste type styling map
   readonly wasteTypeStyles: Record<WasteType, { bgClass: string; textClass: string }> = {
     [WasteType.PLASTIC]: { bgClass: 'bg-blue-100 dark:bg-blue-900', textClass: 'text-blue-700 dark:text-blue-300' },
     [WasteType.GLASS]: { bgClass: 'bg-amber-100 dark:bg-amber-900', textClass: 'text-amber-700 dark:text-amber-300' },
@@ -44,7 +42,6 @@ export class CollectionTrackerComponent implements OnInit {
     this.collections$ = this.store.select(selectAcceptedCollectionsForCollector);
   }
 
-  /** Get current step status for progress tracking */
   getStepStatus(collection: Collection, step: CollectionStatus): 'completed' | 'current' | 'pending' | 'rejected' {
     const statusOrder = [
       CollectionStatus.PENDING,
@@ -61,25 +58,18 @@ export class CollectionTrackerComponent implements OnInit {
     return stepIndex < currentIndex ? 'completed' : stepIndex === currentIndex ? 'current' : 'pending';
   }
 
-  /** Calculate total waste weight */
   getTotalWeight(wasteItems: WasteItem[]): number {
     return wasteItems.reduce((total, item) => total + item.weight, 0);
   }
 
-  /** Format date */
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString();
   }
 
-  /** Update collection status */
   protected updateStatus(collection: Collection, newStatus: CollectionStatus): void {
     if (collection.status === newStatus) return;
 
     this.store.dispatch(updateCollection({ collection: { ...collection, status: newStatus } }));
   }
 
-  /** TrackBy function for collection list */
-  trackByCollectionId(index: number, collection: Collection): number {
-    return collection.id!;
-  }
 }
