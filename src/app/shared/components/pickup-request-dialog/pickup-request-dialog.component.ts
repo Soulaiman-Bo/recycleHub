@@ -21,13 +21,17 @@ import {
 import { selectUser } from '../../../store/auth/auth.selectors';
 import { WasteTestComponent } from '../waste-test/waste-test.component';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
-import { createCollection, updateCollection } from '../../../store/collection/collections.actions';
+import {
+  createCollection,
+  updateCollection,
+} from '../../../store/collection/collections.actions';
+import { map, Observable, take } from 'rxjs';
+import { selectCollectionsForCurrentUser } from '../../../store/collection/collections.selectors';
 
 @Component({
   selector: 'app-pickup-request-dialog',
   standalone: true,
   templateUrl: './pickup-request-dialog.component.html',
-  styleUrls: ['./pickup-request-dialog.component.css'],
   imports: [
     CommonModule,
     MatDialogModule,
@@ -56,6 +60,16 @@ export class PickupRequestDialogComponent {
   wasteItems: WasteItem[] = [{ type: WasteType.PLASTIC, weight: 10 }];
   form!: FormGroup;
   uploadedPhotos: string[] = [];
+
+  collections$: Observable<Collection[]> = this.store.select(
+    selectCollectionsForCurrentUser
+  );
+
+  pendingCollectionsCount$: Observable<number> = this.collections$.pipe(
+    map((collections) =>
+      collections.filter((collection) => collection.status === CollectionStatus.PENDING).length
+    )
+  );
 
   constructor(
     public dialogRef: MatDialogRef<PickupRequestDialogComponent>,
@@ -113,33 +127,41 @@ export class PickupRequestDialogComponent {
   submitForm() {
     if (!this.userId()) return;
 
-    // Build the form data
-    const formData: Collection = {
-      ...this.data?.collection, // this preserves the existing id if editing
-      userId: this.userId()!,   // override userId if necessary
-      wasteItems: this.wasteItems,
-      photos: this.uploadedPhotos,
-      address: this.form.value.address,
-      city: this.form.value.city,
-      date: this.form.value.date,
-      timeSlot: this.form.value.timeSlot,
-      notes: this.form.value.notes,
-      status: this.form.value.status,
-      collectorId: ""
-    };
+    // Check if the user has 3 pending collections
+    this.pendingCollectionsCount$.pipe(take(1)).subscribe((pendingCount) => {
+      if (pendingCount >= 3) {
+        alert("You cannot create more than 3 pending collections.");
+        return;
+      }
 
-    if (!this.data?.collection?.id) {
-      delete formData.id;
-    }
+      // Build the form data
+      const formData: Collection = {
+        ...this.data?.collection, // preserve existing ID if editing
+        userId: this.userId()!,   // override userId
+        wasteItems: this.wasteItems,
+        photos: this.uploadedPhotos,
+        address: this.form.value.address,
+        city: this.form.value.city,
+        date: this.form.value.date,
+        timeSlot: this.form.value.timeSlot,
+        notes: this.form.value.notes,
+        status: this.form.value.status,
+        collectorId: "",
+      };
 
-    // if we have a collection in data, dispatch update
-    if (this.data?.collection) {
-      this.store.dispatch(updateCollection({ collection: formData }));
-    } else {
-      // else create new
-      this.store.dispatch(createCollection({ collection: formData }));
-    }
+      if (!this.data?.collection?.id) {
+        delete formData.id;
+      }
 
-    this.dialogRef.close();
+      // If editing, dispatch update
+      if (this.data?.collection) {
+        this.store.dispatch(updateCollection({ collection: formData }));
+      } else {
+        // Else, create a new collection
+        this.store.dispatch(createCollection({ collection: formData }));
+      }
+
+      this.dialogRef.close();
+    });
   }
 }

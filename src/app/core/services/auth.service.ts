@@ -22,7 +22,9 @@ export class AuthService {
     username: string,
     email: string,
     password: string,
-    role: string = 'individual'
+    role: string = 'individual',
+    address: string,
+    city: string
   ): Observable<User> {
     const newUser: User = {
       id: this.generateId(),
@@ -30,6 +32,8 @@ export class AuthService {
       email,
       role,
       password,
+      address,
+      city,
     };
 
     return this.http

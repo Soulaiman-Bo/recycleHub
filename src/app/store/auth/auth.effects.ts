@@ -17,7 +17,7 @@ export class AuthEffects {
       ofType(AuthActions.signUp),
       switchMap((action) =>
         this.authService
-          .signUp(action.username, action.email, action.password)
+          .signUp(action.username, action.email, action.password, action.role, action.address, action.city)
           .pipe(
             map((user) => AuthActions.signUpSuccess({ user })),
             catchError((error) =>

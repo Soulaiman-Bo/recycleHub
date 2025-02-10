@@ -58,7 +58,8 @@ export class CollectionTableComponent {
   openDetails(collection: Collection) {
     this.dialog.open(CollectionDetailsDialogComponent, {
       data: { collection },
-      width: '600px',
+      width: '50vw',
+      maxWidth: '80vw',
     });
   }
 }

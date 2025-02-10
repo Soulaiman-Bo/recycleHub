@@ -14,6 +14,22 @@
       "email": "tiniin.email@gmail.com",
       "role": "individual",
       "password": "tiniin.email@gmail.com"
+    },
+    {
+      "id": "fitmg7wq5",
+      "username": "tinifffn@gmail.com",
+      "email": "tinifffn@gmail.com",
+      "role": "individual",
+      "password": "tinifffn@gmail.com"
+    },
+    {
+      "id": "yppdrssgp",
+      "username": "sdfsdf",
+      "email": "yqjnlmaadc31@outlook.com",
+      "role": "individual",
+      "password": "sdfsdfdffsdf",
+      "address": "sdfsdfs",
+      "city": "sdfsdfsf"
     }
   ],
   "collections": [
@@ -72,6 +88,79 @@
       "notes": "dfgddfgfdg dfgdfgdfg",
       "status": "Completed",
       "collectorId": "c267s3t3i"
+    },
+    {
+      "id": "8294",
+      "userId": "xx7g1x9mh",
+      "wasteItems": [
+        {
+          "type": "Plastic",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "sdfsdfs",
+      "city": "Marrakech",
+      "date": "2025-01-31",
+      "timeSlot": "10:00-11:00",
+      "notes": "",
+      "status": "Rejected",
+      "collectorId": "c267s3t3i"
+    },
+    {
+      "id": "8e40",
+      "userId": "yppdrssgp",
+      "wasteItems": [
+        {
+          "type": "Plastic",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "sdfsd",
+      "city": "dsfsd",
+      "date": "2025-02-11",
+      "timeSlot": "12:00-13:00",
+      "notes": "",
+      "status": "Pending",
+      "collectorId": ""
+    },
+    {
+      "id": "e4da",
+      "userId": "yppdrssgp",
+      "wasteItems": [
+        {
+          "type": "Plastic",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "sdf",
+      "city": "sdf",
+      "date": "2025-01-30",
+      "timeSlot": "12:00-13:00",
+      "notes": "",
+      "status": "Pending",
+      "collectorId": ""
+    },
+    {
+      "id": "dcbc",
+      "userId": "yppdrssgp",
+      "wasteItems": [
+        {
+          "type": "Plastic",
+          "weight": 10
+        }
+      ],
+      "photos": [],
+      "address": "sdfsdf",
+      "city": "sdfsd",
+      "date": "2025-02-20",
+      "timeSlot": "13:00-14:00",
+      "notes": "",
+      "status": "Pending",
+      "collectorId": ""
     }
-  ]
+  ],
+  "withdrawals": []
 }
