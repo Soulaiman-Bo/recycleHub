@@ -41,6 +41,7 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
+
   // Login
   login(email: string, password: string): Observable<User | null> {
     return this.http
@@ -50,6 +51,7 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+
 
   getUserById(id: string): Observable<User> {
     return this.http

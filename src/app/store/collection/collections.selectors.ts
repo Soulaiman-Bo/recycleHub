@@ -26,12 +26,17 @@ export const selectPendingCollectionsForCollector = createSelector(
   (collections, user) => {
     if (!user?.city) return [];
 
-    return collections.filter(
+    let cols =  collections.filter(
       (c) =>
         c.status === CollectionStatus.PENDING &&
         c.city === user.city &&
         c.userId !== user.id
     );
+
+    console.log({cols});
+
+
+    return cols;
   }
 );
 

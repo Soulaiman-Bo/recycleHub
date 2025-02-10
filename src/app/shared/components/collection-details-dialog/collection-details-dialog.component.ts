@@ -46,9 +46,6 @@ export class CollectionDetailsDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: { collection: Collection }
   ) {}
 
-  getCollectorName(): string {
-    return 'John Doe';
-  }
 
   onImageError(event: Event) {
     const element = event.target as HTMLImageElement;

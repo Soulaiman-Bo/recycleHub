@@ -66,8 +66,11 @@ export class PickupRequestDialogComponent {
   );
 
   pendingCollectionsCount$: Observable<number> = this.collections$.pipe(
-    map((collections) =>
-      collections.filter((collection) => collection.status === CollectionStatus.PENDING).length
+    map(
+      (collections) =>
+        collections.filter(
+          (collection) => collection.status === CollectionStatus.PENDING
+        ).length
     )
   );
 
@@ -130,14 +133,14 @@ export class PickupRequestDialogComponent {
     // Check if the user has 3 pending collections
     this.pendingCollectionsCount$.pipe(take(1)).subscribe((pendingCount) => {
       if (pendingCount >= 3) {
-        alert("You cannot create more than 3 pending collections.");
+        alert('You cannot create more than 3 pending collections.');
         return;
       }
 
       // Build the form data
       const formData: Collection = {
         ...this.data?.collection, // preserve existing ID if editing
-        userId: this.userId()!,   // override userId
+        userId: this.userId()!, // override userId
         wasteItems: this.wasteItems,
         photos: this.uploadedPhotos,
         address: this.form.value.address,
@@ -146,7 +149,7 @@ export class PickupRequestDialogComponent {
         timeSlot: this.form.value.timeSlot,
         notes: this.form.value.notes,
         status: this.form.value.status,
-        collectorId: "",
+        collectorId: '',
       };
 
       if (!this.data?.collection?.id) {
