@@ -63,4 +63,13 @@ export class CollectorCollectionTableComponent {
     };
     this.store.dispatch(updateCollection({ collection: updatedCollection }));
   }
+
+  runCollection(collection: Collection) {
+    const updatedCollection: Collection = {
+      ...collection,
+      status: CollectionStatus.RUNNING,
+      collectorId: this.currentUserId$,
+    };
+    this.store.dispatch(updateCollection({ collection: updatedCollection }));
+  }
 }

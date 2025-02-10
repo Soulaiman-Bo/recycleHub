@@ -55,8 +55,29 @@
         </div>
       </div>
 
+
+
       <!-- Progress Steps -->
-      <div class="relative flex-1 max-w-5xl">
+      <div class="relative flex-1 flex gap-4 max-w-5xl">
+
+        <!-- @if (collection.status === CollectionStatus.RUNNING){
+          <div>
+            <button
+              class="w-8 h-8 text-gray-600 rounded-full flex items-center justify-center bg-red-100 dark:bg-red-900"
+              (click)="updateStatus(collection, CollectionStatus.REJECTED)"
+            >
+              X
+            </button>
+
+            <div class="flex text-gray-600 flex-col items-center">
+              <button
+                (click)="updateStatus(collection, CollectionStatus.REJECTED)"
+              ></button>
+              <span> Reject </span>
+            </div>
+          </div>
+          } -->
+
         <ol class="flex items-center w-full mb-4">
           @for (status of statusSteps; track status) {
           <li

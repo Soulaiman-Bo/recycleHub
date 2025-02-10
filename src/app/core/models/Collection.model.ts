@@ -3,7 +3,8 @@ export enum CollectionStatus {
   IN_PROGRESS = 'In Progress',
   COMPLETED = 'Completed',
   ACCEPTED = 'Accepted',
-  REJECTED = 'Rejected'
+  REJECTED = 'Rejected',
+  RUNNING = 'Running'
 }
 
 export enum WasteType {

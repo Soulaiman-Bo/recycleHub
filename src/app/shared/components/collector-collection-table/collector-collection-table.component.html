@@ -90,6 +90,12 @@
           </td>
           <td class="px-6 py-4 flex gap-2 whitespace-nowrap">
             <button
+              (click)="runCollection(collection)"
+              class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700"
+            >
+              Occupée
+            </button>
+            <button
               (click)="acceptCollection(collection)"
               class="px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700"
             >

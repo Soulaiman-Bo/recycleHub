@@ -66,7 +66,7 @@
       "date": "",
       "timeSlot": "10:00-11:00",
       "notes": "",
-      "status": "Completed",
+      "status": "Rejected",
       "collectorId": "c267s3t3i"
     },
     {
@@ -104,7 +104,7 @@
       "date": "2025-01-31",
       "timeSlot": "10:00-11:00",
       "notes": "",
-      "status": "Rejected",
+      "status": "Accepted",
       "collectorId": "c267s3t3i"
     },
     {
@@ -136,12 +136,12 @@
       ],
       "photos": [],
       "address": "sdf",
-      "city": "sdf",
+      "city": "Marrakech",
       "date": "2025-01-30",
       "timeSlot": "12:00-13:00",
       "notes": "",
-      "status": "Pending",
-      "collectorId": ""
+      "status": "Completed",
+      "collectorId": "c267s3t3i"
     },
     {
       "id": "dcbc",
@@ -154,12 +154,12 @@
       ],
       "photos": [],
       "address": "sdfsdf",
-      "city": "sdfsd",
+      "city": "Marrakech",
       "date": "2025-02-20",
       "timeSlot": "13:00-14:00",
       "notes": "",
-      "status": "Pending",
-      "collectorId": ""
+      "status": "Completed",
+      "collectorId": "c267s3t3i"
     }
   ],
   "withdrawals": []
